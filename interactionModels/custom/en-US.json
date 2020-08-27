@@ -1,0 +1,154 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "date. a. voice",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "HelloWorldIntent",
+          "slots": [],
+          "samples": [
+            "hello",
+            "how are you",
+            "say hi world",
+            "say hi",
+            "hi",
+            "say hello world",
+            "say hello"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "GetDateStatusIntent",
+          "slots": [],
+          "samples": [
+            "status"
+          ]
+        },
+        {
+          "name": "StartDatingSimIntent",
+          "slots": [
+            {
+              "name": "a",
+              "type": "AMAZON.NUMBER",
+              "samples": [
+                "Confirm {a}"
+              ]
+            }
+          ],
+          "samples": [
+            "start the dating sim",
+            "start dating sim",
+            "start the dating simulator",
+            "start dating simulator"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "values": [
+            {
+              "id": "3",
+              "name": {
+                "value": "bixby"
+              }
+            },
+            {
+              "id": "2",
+              "name": {
+                "value": "siri"
+              }
+            },
+            {
+              "id": "1",
+              "name": {
+                "value": "google",
+                "synonyms": [
+                  "google home"
+                ]
+              }
+            },
+            {
+              "id": "0",
+              "name": {
+                "value": "alexa"
+              }
+            }
+          ],
+          "name": "va_name"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "arcade"
+              }
+            },
+            {
+              "name": {
+                "value": "restaurant",
+                "synonyms": [
+                  "cafe",
+                  "eatery"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "beach"
+              }
+            }
+          ],
+          "name": "date_location"
+        }
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "StartDatingSimIntent",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "a",
+              "type": "AMAZON.NUMBER",
+              "elicitationRequired": true,
+              "confirmationRequired": false,
+              "prompts": {
+                "elicitation": "Elicit.Slot.344125094574.43228371085"
+              }
+            }
+          ]
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.344125094574.43228371085",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Say one"
+          }
+        ]
+      }
+    ]
+  },
+  "version": "11"
+}

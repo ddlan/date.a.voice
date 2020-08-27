@@ -1,0 +1,33 @@
+{
+    "alexa-beach": {
+      "va_name": "alexa",
+      "date_location": "beach",
+      "points": 30
+    },
+    "alexa-restaurant": {
+      "va_name": "alexa",
+      "date_location": "restaurant",
+      "points": 20
+    },
+    "alexa-arcade": {
+      "va_name": "alexa",
+      "date_location": "arcade",
+      "points": 10
+    },
+    "siri-beach": {
+      "va_name": "siri",
+      "date_location": "beach",
+      "points": 25
+    },
+    "siri-restaurant": {
+      "va_name": "siri",
+      "date_location": "restaurant",
+      "points": 30
+    },
+    "siri-arcade": {
+      "va_name": "siri",
+      "date_location": "arcade",
+      "points": 5
+    }
+  }
+  
