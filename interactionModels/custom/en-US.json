@@ -41,15 +41,7 @@
         },
         {
           "name": "StartDatingSimIntent",
-          "slots": [
-            {
-              "name": "a",
-              "type": "AMAZON.NUMBER",
-              "samples": [
-                "Confirm {a}"
-              ]
-            }
-          ],
+          "slots": [],
           "samples": [
             "start the dating sim",
             "start dating sim",
@@ -61,6 +53,12 @@
       "types": [
         {
           "values": [
+            {
+              "id": "4",
+              "name": {
+                "value": "cortana"
+              }
+            },
             {
               "id": "3",
               "name": {
@@ -114,41 +112,344 @@
             }
           ],
           "name": "date_location"
-        }
-      ]
-    },
-    "dialog": {
-      "intents": [
+        },
         {
-          "name": "StartDatingSimIntent",
-          "confirmationRequired": false,
-          "prompts": {},
-          "slots": [
+          "values": [
             {
-              "name": "a",
-              "type": "AMAZON.NUMBER",
-              "elicitationRequired": true,
-              "confirmationRequired": false,
-              "prompts": {
-                "elicitation": "Elicit.Slot.344125094574.43228371085"
+              "name": {
+                "value": "relaxing with a book"
+              }
+            },
+            {
+              "name": {
+                "value": "shopping trip"
+              }
+            },
+            {
+              "name": {
+                "value": "dinner party"
+              }
+            },
+            {
+              "name": {
+                "value": "clubbing"
+              }
+            },
+            {
+              "name": {
+                "value": "watching a movie"
               }
             }
-          ]
+          ],
+          "name": "fri_night"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "tennis date"
+              }
+            },
+            {
+              "name": {
+                "value": "date on a yacht"
+              }
+            },
+            {
+              "name": {
+                "value": "museum"
+              }
+            },
+            {
+              "name": {
+                "value": "skydiving"
+              }
+            },
+            {
+              "name": {
+                "value": "picnic at the park"
+              }
+            }
+          ],
+          "name": "first_date"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "super speed"
+              }
+            },
+            {
+              "name": {
+                "value": "rich and beautiful"
+              }
+            },
+            {
+              "name": {
+                "value": "telepathy"
+              }
+            },
+            {
+              "name": {
+                "value": "mind control"
+              }
+            },
+            {
+              "name": {
+                "value": "invulnerability"
+              }
+            }
+          ],
+          "name": "superpower"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "aqua"
+              }
+            },
+            {
+              "name": {
+                "value": "rose gold"
+              }
+            },
+            {
+              "name": {
+                "value": "red"
+              }
+            },
+            {
+              "name": {
+                "value": "blue"
+              }
+            },
+            {
+              "name": {
+                "value": "orange"
+              }
+            }
+          ],
+          "name": "AMAZON.Color"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "psychological thriller"
+              }
+            },
+            {
+              "name": {
+                "value": "romance"
+              }
+            },
+            {
+              "name": {
+                "value": "documentary"
+              }
+            },
+            {
+              "name": {
+                "value": "horror"
+              }
+            },
+            {
+              "name": {
+                "value": "comedy"
+              }
+            }
+          ],
+          "name": "movie"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "all"
+              }
+            },
+            {
+              "name": {
+                "value": "winter"
+              }
+            },
+            {
+              "name": {
+                "value": "fall"
+              }
+            },
+            {
+              "name": {
+                "value": "summer"
+              }
+            },
+            {
+              "name": {
+                "value": "spring"
+              }
+            }
+          ],
+          "name": "season"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "collarbone"
+              }
+            },
+            {
+              "name": {
+                "value": "arm sleeve "
+              }
+            },
+            {
+              "name": {
+                "value": "ankle"
+              }
+            },
+            {
+              "name": {
+                "value": "neck"
+              }
+            },
+            {
+              "name": {
+                "value": "no tattoo"
+              }
+            }
+          ],
+          "name": "tattoo"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "online store"
+              }
+            },
+            {
+              "name": {
+                "value": "watch store"
+              }
+            },
+            {
+              "name": {
+                "value": "consulting company"
+              }
+            },
+            {
+              "name": {
+                "value": "travel agency"
+              }
+            },
+            {
+              "name": {
+                "value": "book store"
+              }
+            }
+          ],
+          "name": "business"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "maybe"
+              }
+            },
+            {
+              "name": {
+                "value": "no"
+              }
+            },
+            {
+              "name": {
+                "value": "yes"
+              }
+            }
+          ],
+          "name": "cheated"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "one horse sized duck"
+              }
+            },
+            {
+              "name": {
+                "value": "one hundred duck-sized horses"
+              }
+            }
+          ],
+          "name": "duck_horse"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "cats"
+              }
+            },
+            {
+              "name": {
+                "value": "dogs"
+              }
+            }
+          ],
+          "name": "dogs_cats"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "tea"
+              }
+            },
+            {
+              "name": {
+                "value": "coffee"
+              }
+            }
+          ],
+          "name": "coffee_tea"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "shark"
+              }
+            },
+            {
+              "name": {
+                "value": "mountain lion"
+              }
+            },
+            {
+              "name": {
+                "value": "elephant"
+              }
+            },
+            {
+              "name": {
+                "value": "eagle"
+              }
+            },
+            {
+              "name": {
+                "value": "turtle"
+              }
+            }
+          ],
+          "name": "animal"
         }
-      ],
-      "delegationStrategy": "ALWAYS"
-    },
-    "prompts": [
-      {
-        "id": "Elicit.Slot.344125094574.43228371085",
-        "variations": [
-          {
-            "type": "PlainText",
-            "value": "Say one"
-          }
-        ]
-      }
-    ]
+      ]
+    }
   },
-  "version": "11"
+  "version": "32"
 }

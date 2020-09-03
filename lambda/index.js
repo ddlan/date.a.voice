@@ -5,6 +5,39 @@ const Alexa = require('ask-sdk-core');
 const data = require('./DateScores.json');
 const util = require('./util.js');
 
+// *****************************************************************************
+// HELPER FUNCTIONS FOR SSML
+// *****************************************************************************
+const speak = function(speech) {
+    return `<speak>${speech}</speak>`;
+};
+
+const leadIn = function(name) {
+    const dbName = data[name];
+    const index = Math.floor(Math.random() * 5);
+    
+    return dbName["leadin"][index] + "<break strength='medium'/>";
+};
+
+const neutral = function(name) {
+    const dbName = data[name];
+    const index = Math.floor(Math.random() * 3);
+    
+    return dbName["neutral"][index] + "<break strength='medium' />";
+};
+
+const disliked = function(name) {
+    const dbName = data[name];
+    const index = Math.floor(Math.random() * 3);
+    
+    return dbName["disliked"][index] + "<break strength='medium' />";
+};
+
+const ask = function() {
+    // TODO: vary question based on seed
+    return data["questions"][0]["text"];
+}
+    
 const GoOnDateAPIHandler = {
     
     canHandle(handlerInput) {
@@ -17,31 +50,67 @@ const GoOnDateAPIHandler = {
         let name = resolveEntity(apiRequest.slots, "va_name");
         let location = resolveEntity(apiRequest.slots, "date_location");
         
-        const goOnDateResult = {};
+        let goOnDateResult = {};
         if (name !== null && location !== null) {
-            const key = `${name}-${location}`;
-            const databaseResponse = data[key];
+            // TODO: Do some checking so you can't call goOnDate multiple times
+            const dbLocation = data[name][location];
+            const datePoints = dbLocation.datePoints;
             
-            console.log("Response from mock database ", databaseResponse);
-            
-            goOnDateResult.va_name = apiRequest.arguments.va_name;
-            goOnDateResult.date_location = apiRequest.arguments.date_location;
-            goOnDateResult.points = databaseResponse.points;
+            goOnDateResult = speak(dbLocation.response + dbLocation.start + leadIn(name) + ask());
             
             const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-            if (sessionAttributes.datePoints) {
-                sessionAttributes.datePoints += databaseResponse.datePoints;
-            } else {
-                sessionAttributes.datePoints = 0;
-            }
-            
-            console.log("Current date points are ", databaseResponse.datePoints);
+
+            sessionAttributes.datePoints = datePoints;
+            sessionAttributes.va_name = name;
+            console.log("Current date points are ", datePoints);
             
             handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
         }
         
         const response = buildSuccessApiResponse(goOnDateResult);
         console.log('GoOnDateAPIHandler', JSON.stringify(response));
+        
+        return response;
+    }
+};
+
+const FridayNightQuestionAPIHandler = {
+    
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'fridayNightQuestion');
+    },
+    handle(handlerInput) {
+        
+        const apiRequest = handlerInput.requestEnvelope.request.apiRequest;
+        let fri_night = resolveEntity(apiRequest.slots, "fri_night");
+        
+        let friNightResult = {};
+        if (fri_night !== null) {
+            const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+            const name = sessionAttributes.va_name;
+            
+            const dbFriNight = data[name]["fridayNight"][fri_night];
+            const datePoints = dbFriNight.datePoints;
+            
+            let response = "";
+            if (datePoints === 30) {
+                response = dbFriNight.response;
+            } else if (datePoints === 20) {
+                response = neutral(name);
+            } else { // (datePoints === 10)
+                response = disliked(name);
+            }
+            
+            friNightResult = speak(response + leadIn(name) + ask());
+
+            sessionAttributes.datePoints += datePoints;
+            console.log("Current date points are ", datePoints);
+            
+            handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+        }
+        
+        const response = buildSuccessApiResponse(friNightResult);
+        console.log('fridayNightQuestionHandler', JSON.stringify(response));
         
         return response;
     }
@@ -59,63 +128,15 @@ const CheckDateStatusAPIHandler = {
             datePoints = sessionAttributes.datePoints;
         }
         
-        const checkDateStatusResult = {};
-        checkDateStatusResult.datePoints = datePoints
+        const checkDateStatusResult = datePoints;
     
         const response = buildSuccessApiResponse(checkDateStatusResult);
-        console.log('GoOnDateAPIHandler', JSON.stringify(response));
+        console.log('CheckDateStatusAPIHandler', JSON.stringify(response));
         
         return response;
     }
 };
 
-const GetDateStatusIntentHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'GetDateStatusIntent';
-    },
-    handle(handlerInput) {
-        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-    
-        var datePoints = 0;
-        if (sessionAttributes.datePoints) {
-            datePoints = sessionAttributes.datePoints;
-        }
-        
-        const speechText = `The current points are ${datePoints}.`;
-        const repromptText = `Let's continue the date...`;
-    
-        return handlerInput.responseBuilder
-            .speak(speechText)
-            .reprompt(repromptText)
-            .getResponse();
-    }
-};
-
-const StartDatingSimIntentHandler = {
-    canHandle(handlerInput) {
-        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
-            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'StartDatingSimIntent';
-    },
-    handle(handlerInput) {
-        
-        return handlerInput.responseBuilder
-            .addDelegateDirective({
-                "type": "Dialog.DelegateRequest",
-                "target": "AMAZON.Conversations",
-                "period": {
-                    "until": "EXPLICIT_RETURN"
-                },
-                "updatedRequest": {
-                    "type": "Dialog.InputRequest",
-                    "input": {
-                        "name": "invoke_goOnDate"
-                    }
-                }
-            })
-            .getResponse();
-    }
-};
 
 const LaunchRequestHandler = {
     canHandle(handlerInput) {
@@ -274,9 +295,8 @@ exports.handler = Alexa.SkillBuilders.custom()
         HelpIntentHandler,
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
-        GetDateStatusIntentHandler,
-        StartDatingSimIntentHandler,
         GoOnDateAPIHandler,
+        FridayNightQuestionAPIHandler,
         CheckDateStatusAPIHandler,
         IntentReflectorHandler, // make sure IntentReflectorHandler is last so it doesn't override your custom intent handlers
     )

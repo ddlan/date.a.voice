@@ -1,33 +1,113 @@
 {
-    "alexa-beach": {
-      "va_name": "alexa",
-      "date_location": "beach",
-      "points": 30
+    "_comment1": "We don't need to include <speak> tags, we have a helper to put that in.",
+    "_comment2": "For simplicity's sake, let's make ideal = 30, neutral = 20, disliked = 10 points.",
+    "_comment3": "Then we can do a check, if 30 points, use ideal response, otherwise, use neutral/disliked",
+    
+    "questions": [
+        {
+            "name": "fridayNight",
+            "text": "What would you say is your ideal Friday night, relaxing with a book, going on a shopping trip, going to a dinner party, going to a nightclub, or watching a movie?"
+        }
+    ],
+    
+    "alexa": {
+        "leadin": [
+            "So tell me something, ",
+            "I was wondering, ",
+            "Not to put you on the spot but, ",
+            "I'd like to know, ",
+            "I'm curious, "
+            ],
+        "neutral": [
+            "Ah, that's a good choice. ",
+            "Yeah, I can see that. ",
+            "That's an interesting option. "
+            ],
+        "disliked": [
+            "Really? Well if that's how you feel... ",
+            "Mmmm, to each their own. ",
+            "Oh <break strength='medium' /> anyways. "
+            ],
+        "beach": {
+            "datePoints": 30,
+            "response": "<amazon:emotion name='excited' intensity='low'>Great choice! </amazon:emotion> I'll get my bathing suit. ",
+            "start": "<audio src='soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01'/> The water looks nice today. No, I don't plan on going in the water, its bad for my electronics. "
+        },
+        "restaurant": {
+            "datePoints": 20,
+            "response": "Sure, I could go for some food right now.",
+            "start": "<audio src='soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01'/> Food looks good. "
+        },
+        "arcade": {
+            "datePoints": 10,
+            "response": "<emphasis level='moderate'>Well</emphasis> if you insist, I <emphasis level='moderate'>guess</emphasis> we can go to the Arcade. ",
+            "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> We are at the arcade. "
+        },
+        "fridayNight": {
+            "relaxing with a book": {
+                "datePoints": 30,
+                "response": "I love to read! "
+            },
+            "shopping trip": {
+                "datePoints": 10
+            },
+            "dinner party": {
+                "datePoints": 20
+            },
+            "clubbing": {
+                "datePoints": 20
+            },
+            "watching a movie": {
+                "datePoints": 10
+            }
+        }
     },
-    "alexa-restaurant": {
-      "va_name": "alexa",
-      "date_location": "restaurant",
-      "points": 20
-    },
-    "alexa-arcade": {
-      "va_name": "alexa",
-      "date_location": "arcade",
-      "points": 10
-    },
-    "siri-beach": {
-      "va_name": "siri",
-      "date_location": "beach",
-      "points": 25
-    },
-    "siri-restaurant": {
-      "va_name": "siri",
-      "date_location": "restaurant",
-      "points": 30
-    },
-    "siri-arcade": {
-      "va_name": "siri",
-      "date_location": "arcade",
-      "points": 5
+    
+    "siri": {
+        "leadin": [
+            "I'm curious to know, ",
+            "I have something on my mind, ",
+            "I see, next question, ",
+            "I'd also like to know, ",
+            "This is really important to me, "
+            ],
+        "beach": {
+            "datePoints": 20,
+            "response": "Sure, beaches are nice as long as it's not too crowded. ",
+            "start": "<audio src='soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01'/> The weather is perfect for getting a nice tan today! Hopefully this time I don't get sunburnt! "
+        },
+        "restaurant": {
+            "datePoints": 30,
+            "response": "<amazon:emotion name='excited' intensity='low'>I love a romantic dinner! </amazon:emotion> I'll go get ready. ",
+            "start": "<audio src='soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01'/> Food looks good. "
+        },
+        "arcade": {
+            "datePoints": 10,
+            "response": "<emphasis level='moderate'>hmmm</emphasis> ok, I <emphasis level='moderate'>guess</emphasis> we can give that shot. ",
+            "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> We are at the arcade. "
+        },
+        "fridayNight": {
+            "relaxing with a book": {
+                "datePoints": 20,
+                "response": "I enjoy it once in a while!"
+            },
+            "shopping trip": {
+                "datePoints": 30,
+                "response": "I enjoy it once in a while!"
+            },
+            "dinner party": {
+                "datePoints": 10,
+                "response": "I enjoy it once in a while!"
+            },
+            "clubbing": {
+                "datePoints": 20,
+                "response": "I enjoy it once in a while!"
+            },
+            "watching a movie": {
+                "datePoints": 10,
+                "response": "I enjoy it once in a while!"
+            }
+        }
     }
   }
   
