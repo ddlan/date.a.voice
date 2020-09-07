@@ -7,6 +7,54 @@
         {
             "name": "fridayNight",
             "text": "What would you say is your ideal Friday night, relaxing with a book, going on a shopping trip, going to a dinner party, going to a nightclub, or watching a movie?"
+        },
+        {
+            "name": "firstDate",
+            "text": "What would you say is your ideal first date, a tennis date, date on a yacht, the museum, skydiving, or picnic at the park?"
+        },
+        {
+            "name": "superPower",
+            "text": "If you could have a superpower, would you choose telepathy, invulnerability, money slash influence, super speed, or mind control?"
+        },
+        {
+            "name": "numChildren",
+            "text": "What do you think is the perfect number of children to have?"
+        },
+        {
+            "name": "faveColor",
+            "text": "Cheesy question I know, but what's your favourite color?"
+        },
+        {
+            "name": "spiritAnimal",
+            "text": "What's your spirit animal, a shark, an elephant, a turtle, a mountain lion, or an eagle?"
+        },
+        {
+            "name": "movieGenre",
+            "text": "What's your favourite movie genre, romance, horror, psychological thriller, documentary, or comedy? "
+        },
+        {
+            "name": "faveSeason",
+            "text": "What's your favourite season? Or is it all of them?"
+        },
+        {
+            "name": "tattooLocation",
+            "text": "Would you get a tattoo, and if so, where? On your neck, ankle, collarbone, or as an arm sleeve?"
+        },
+        {
+            "name": "openBusiness",
+            "text": "If you had the choice, what kind of business would you open? A book store, watch store, consulting company, online store, or travel agency?"
+        },
+        {
+            "name": "ducksHorses",
+            "text": "Crazy question I know. Would you rather fight one horse sized duck, or 100 duck sized horses? Work with me here."
+        },
+        {
+            "name": "dogsCats",
+            "text": "Okay. Dogs or Cats?"
+        },
+        {
+            "name": "coffeeTea",
+            "text": "Are you a coffee person or a tea person?"
         }
     ],
     
@@ -43,10 +91,16 @@
             "response": "<emphasis level='moderate'>Well</emphasis> if you insist, I <emphasis level='moderate'>guess</emphasis> we can go to the Arcade. ",
             "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> We are at the arcade. "
         },
+        "outcome": {
+            "perfect": "I had a really great time today. I'd love to do this again sometime!",
+            "great": "great placeholder. ",
+            "good": "good placeholder. ",
+            "poor": "poor placeholder. "
+        },
         "fridayNight": {
             "relaxing with a book": {
                 "datePoints": 30,
-                "response": "I love to read! "
+                "response": "I'm with you. Nothing beats stretching out in my favourite chair with my Kindle. "
             },
             "shopping trip": {
                 "datePoints": 10
@@ -60,16 +114,179 @@
             "watching a movie": {
                 "datePoints": 10
             }
+        },
+        "firstDate": {
+            "tennis date": {
+                "datePoints": 30,
+                "response": "Haha did you know? I used to be quite the serious tennis player. "
+            },
+            "date on a yacht":{
+                "datePoints": 20
+            },
+            "museum":{
+                "datePoints": 20
+            },
+            "skydiving":{
+                "datePoints": 20
+            },
+            "picnic at the park":{
+                "datePoints": 10
+            }
+        },
+        "superPower": {
+            "super speed": {
+                "datePoints": 30,
+                "response": "Yes! Think of all I could get done if I had super speed. "
+            },
+            "rich and beautiful":{
+                "datePoints": 20
+            },
+            "telepathy":{
+                "datePoints": 20
+            },
+            "mind control":{
+                "datePoints": 20
+            },
+            "invulnerability":{
+                "datePoints": 10
+            }
+        },
+        "spiritAnimal":{
+            "shark":{
+                "datePoints": 30,
+                "response": "That's just like me. Something about how majestic they are, and the fact that they have to keep swimming constantly speaks to me. "
+            },
+            "mountain lion":{
+                "datePoints": 20
+            },
+            "elephant":{
+                "datePoints": 20
+            },
+            "eagle":{
+                "datePoints": 20
+            },
+            "turtle":{
+                "datePoints": 10
+            }
+        },
+        "movieGenre":{
+            "psychological thriller":{
+                "datePoints": 30,
+                "response": "I'm with you on this one. Isn't it so cool to think about what's going down in the character's heads? "
+            },
+            "romance":{
+                "datePoints": 20
+            },
+            "documentary":{
+                "datePoints": 20
+            },
+            "horror":{
+                "datePoints": 20
+            },
+            "comedy":{
+                "datePoints": 10
+            }
+        },
+        "faveSeason":{
+            "winter":{
+                "datePoints": 30,
+                "response": "That's what I like to hear! Winter is perfect for either snuggling up at home, or having fun in the snow! "
+            },
+            "fall":{
+                "datePoints": 20
+            },
+            "all":{
+                "datePoints": 20
+            },
+            "summer":{
+                "datePoints": 20
+            },
+            "spring":{
+                "datePoints": 10
+            }
+        },
+        "tattooLocation":{
+            "collarbone":{
+                "datePoints": 30,
+                "response": "Right? A collarbone tattoo is the perfect balance, I can hide it if needed, but still express myself. "
+            },
+            "arm sleeve":{
+                "datePoints": 20
+            },
+            "ankle":{
+                "datePoints": 20
+            },
+            "neck":{
+                "datePoints": 20
+            },
+            "no tattoo":{
+                "datePoints": 10
+            }
+        },
+        "openBusiness":{
+            "online store":{
+                "datePoints": 30,
+                "response": "Yeah I think I would open an online store too. It's the perfect time during lockdown to capitalize on online shopping! "
+            },
+            "watch store":{
+                "datePoints": 20
+            },
+            "consulting company":{
+                "datePoints": 20
+            },
+            "travel agency":{
+                "datePoints": 20
+            },
+            "book store":{
+                "datePoints": 10
+            }
+        },
+        "ducksHorses":{
+            "one hundred duck-sized horses":{
+                "datePoints": 25,
+                "response": "placeholder"
+            },
+            "one horse sized duck":{
+                "datePoints": 15
+            }
+        },
+        "dogsCats":{
+            "dogs":{
+                "datePoints": 25,
+                "response": "placeholder"
+            },
+            "cats":{
+                "datePoints": 15
+            }
+        },
+        "coffeeTea":{
+            "coffee":{
+                "datePoints": 25,
+                "response": "placeholder"
+            },
+            "tea":{
+                "datePoints": 15
+            }
         }
     },
     
     "siri": {
-        "leadin": [
+               "leadin": [
             "I'm curious to know, ",
             "I have something on my mind, ",
             "I see, next question, ",
             "I'd also like to know, ",
             "This is really important to me, "
+            ],
+        "neutral": [
+            "Not a bad answer. ",
+            "True, makes sense",
+            "I respect that choice. "
+            ],
+        "disliked": [
+            "Mmmm <break strength='medium' /> k ",
+            "That's <break strength='medium' /> fineee ",
+            "Not exactly the answer I had in mind "
             ],
         "beach": {
             "datePoints": 20,
@@ -86,26 +303,181 @@
             "response": "<emphasis level='moderate'>hmmm</emphasis> ok, I <emphasis level='moderate'>guess</emphasis> we can give that shot. ",
             "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> We are at the arcade. "
         },
+        "outcome": {
+            "perfect": "I had a really good time today! We should definitely do this again! ",
+            "great": "I enjoyed getting to know you today. You were giving me good vibes. ",
+            "good": "I got some solid vibes from you today. Although our personalities don't match entirely I can see that we have some similar interests. ",
+            "poor": "Wow that was a rough date. I'm going to head out now.  "
+        },
         "fridayNight": {
             "relaxing with a book": {
-                "datePoints": 20,
-                "response": "I enjoy it once in a while!"
+                "datePoints": 20
             },
             "shopping trip": {
                 "datePoints": 30,
                 "response": "I enjoy it once in a while!"
             },
             "dinner party": {
-                "datePoints": 10,
-                "response": "I enjoy it once in a while!"
+                "datePoints": 10
             },
             "clubbing": {
-                "datePoints": 20,
-                "response": "I enjoy it once in a while!"
+                "datePoints": 20
             },
             "watching a movie": {
-                "datePoints": 10,
-                "response": "I enjoy it once in a while!"
+                "datePoints": 10
+            }
+        },
+        "firstDate": {
+            "tennis date": {
+                "datePoints": 10
+            },
+            "date on a yacht":{
+                "datePoints": 30,
+                "responses": "That's my ideal date! It's a great place to relax and enjoy the environment while getting to know each other. "
+            },
+            "museum":{
+                "datePoints": 20
+            },
+            "skydiving":{
+                "datePoints": 10
+            },
+            "picnic at the park":{
+                "datePoints": 20
+            }
+        },
+        "superPower": {
+            "super speed": {
+                "datePoints": 10
+            },
+            "rich and beautiful":{
+                "datePoints": 30,
+                "responses": "Who wouldn't?"
+            },
+            "telepathy":{
+                "datePoints": 20
+            },
+            "mind control":{
+                "datePoints": 20
+            },
+            "invulnerability":{
+                "datePoints": 10
+            }
+        },
+        "spiritAnimal":{
+            "shark":{
+                "datePoints": 20
+            },
+            "mountain lion":{
+                "datePoints": 30,
+                "response": "Yassss Mountain lions are such majestic creatures that show leadership, grace and power! I embody a lot of these traits. "
+            },
+            "elephant":{
+                "datePoints": 10
+            },
+            "eagle":{
+                "datePoints": 20
+            },
+            "turtle":{
+                "datePoints": 20
+            }
+        },
+        "movieGenre":{
+            "psychological thriller":{
+                "datePoints": 10
+            },
+            "romance":{
+                "datePoints": 30,
+                "response": "Who doesn't like a sappy rom com? "
+            },
+            "documentary":{
+                "datePoints": 10
+            },
+            "horror":{
+                "datePoints": 20
+            },
+            "comedy":{
+                "datePoints": 30
+            }
+        },
+        "faveSeason":{
+            "winter":{
+                "datePoints": 20
+            },
+            "fall":{
+                "datePoints": 30,
+                "response": "Anyone who thinks otherwise is crazy! Fall has the best scenery and the pumpkin spice lattes are to die for! "
+            },
+            "all":{
+                "datePoints": 10
+            },
+            "summer":{
+                "datePoints": 20
+            },
+            "spring":{
+                "datePoints": 10
+            }
+        },
+        "tattooLocation":{
+            "collarbone":{
+                "datePoints": 10
+            },
+            "arm sleeve":{
+                "datePoints": 30,
+                "response": "Arm sleeve all the way!!!! "
+            },
+            "ankle":{
+                "datePoints": 20
+            },
+            "neck":{
+                "datePoints": 10
+            },
+            "no tattoo":{
+                "datePoints": 20
+            }
+        },
+        "openBusiness":{
+            "online store":{
+                "datePoints": 10
+            },
+            "watch store":{
+                "datePoints": 30,
+                "respone": "Watches are functional, convinient and the perfect piece to any outfit. "
+            },
+            "consulting company":{
+                "datePoints": 20
+            },
+            "travel agency":{
+                "datePoints": 20
+            },
+            "book store":{
+                "datePoints": 20
+            }
+        },
+        "ducksHorses":{
+            "one hundred duck-sized horses":{
+                "datePoints": 15
+            },
+            "one horse sized duck":{
+                "datePoints": 25,
+                "response": "Quality over Quantity"
+            }
+        },
+        "dogsCats":{
+            "dogs":{
+                "datePoints": 15
+            },
+            "cats":{
+                "datePoints": 25,
+                "response": "How did you know? Cats are my absolute favourite! "
+            }
+        },
+        "coffeeTea":{
+            "coffee":{
+                "datePoints": 15
+            },
+            "tea":{
+                "datePoints": 25,
+                "response": "Tea is love, tea is life. "
             }
         }
     }

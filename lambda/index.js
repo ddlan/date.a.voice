@@ -3,6 +3,7 @@
 // session persistence, api calls, and more.
 const Alexa = require('ask-sdk-core');
 const data = require('./DateScores.json');
+const map = require('./RequestMap.json');
 const util = require('./util.js');
 
 // *****************************************************************************
@@ -23,21 +24,54 @@ const neutral = function(name) {
     const dbName = data[name];
     const index = Math.floor(Math.random() * 3);
     
-    return dbName["neutral"][index] + "<break strength='medium' />";
+    return dbName["neutral"][index] + "<break time='2s' />";
 };
 
 const disliked = function(name) {
     const dbName = data[name];
     const index = Math.floor(Math.random() * 3);
     
-    return dbName["disliked"][index] + "<break strength='medium' />";
+    return dbName["disliked"][index] + "<break time='2s' />";
 };
 
-const ask = function() {
-    // TODO: vary question based on seed
-    return data["questions"][0]["text"];
+// *****************************************************************************
+// SEED FUNCTIONS
+// *****************************************************************************
+
+// function to generate a random seed for questions
+const qindex = [...Array(14).keys()];
+
+// Function to randomly pick x distinct elements from an array
+const shuffle = function(array) {
+  var temp = array.slice();
+  for (let i = temp.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [temp[i], temp[j]] = [temp[j], temp[i]];
+   }
+  return temp.slice(0,6);
 }
-    
+
+const ask = function(ind) {
+    return data["questions"][ind]["text"];
+}
+
+// *****************************************************************************
+// SESSION ATTRIBUTES FORMAT
+//      datePoints          int : current points
+//      addedPoints         int : points from last answer (used to redo)
+//      va_name          string : name of current date partner
+//      cur_ind             int : index of current question (1 indexed?)
+//      redo_ind            int : index of last "redone" question
+//      can_redo           bool : if the user is allowed to redo the current question. User cannot redo a question twice
+//      seed              [int] : array of question numbers to ask user e.g. [10,4,3,9,7,0]
+//
+// *****************************************************************************
+
+
+// *****************************************************************************
+// API HANDLERS
+// *****************************************************************************
+
 const GoOnDateAPIHandler = {
     
     canHandle(handlerInput) {
@@ -49,6 +83,7 @@ const GoOnDateAPIHandler = {
         
         let name = resolveEntity(apiRequest.slots, "va_name");
         let location = resolveEntity(apiRequest.slots, "date_location");
+        let seed = [0,1,2,3,4,5]; //shuffle(qindex);
         
         let goOnDateResult = {};
         if (name !== null && location !== null) {
@@ -56,12 +91,17 @@ const GoOnDateAPIHandler = {
             const dbLocation = data[name][location];
             const datePoints = dbLocation.datePoints;
             
-            goOnDateResult = speak(dbLocation.response + dbLocation.start + leadIn(name) + ask());
+            goOnDateResult = speak(dbLocation.response + dbLocation.start + leadIn(name) + ask(seed[0]));
             
             const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
             sessionAttributes.datePoints = datePoints;
+            sessionAttributes.addedPoints = datePoints;
             sessionAttributes.va_name = name;
+            sessionAttributes.cur_ind = 1;
+            sessionAttributes.redo_ind = 0;
+            sessionAttributes.can_redo = true;
+            sessionAttributes.seed = seed;
             console.log("Current date points are ", datePoints);
             
             handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
@@ -74,6 +114,267 @@ const GoOnDateAPIHandler = {
     }
 };
 
+const FinishDateAPIHandler = {
+    
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'finishDate');
+    },
+    handle(handlerInput) {
+        
+        const apiRequest = handlerInput.requestEnvelope.request.apiRequest;
+        
+        // TODO: check cur_ind == 6 or whatever
+        
+        let finishDateResult = {};
+        // TODO: Do some checking so you can't call goOnDate multiple times
+        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        const name = sessionAttributes.va_name;
+        const datePoints = sessionAttributes.datePoints;
+        //const seed = sessionAttributes.seed;
+        //const cur_ind = sessionAttributes.cur_ind; 
+        
+        let outcome = "";
+        if (datePoints >= 180) { // Given 6 question + date location, highest score is 30*7=210, average score is 7*(30+20+20+10+10)/5=126
+            outcome = data[name]["outcome"]["perfect"];
+        } else if (datePoints >= 150) {
+            outcome = data[name]["outcome"]["great"];
+        } else if (datePoints >= 110) {
+            outcome = data[name]["outcome"]["good"];
+        } else { // (datePoints < 110)
+            outcome = data[name]["outcome"]["poor"];
+        }
+        
+        finishDateResult = speak(outcome + " try again?");
+        
+        sessionAttributes.datePoints = 0;
+        sessionAttributes.va_name = "";
+        sessionAttributes.cur_ind = 0;
+        sessionAttributes.redo_ind = 0;
+        sessionAttributes.can_redo = null;
+        sessionAttributes.seed = null;
+        console.log("Current date points are ", datePoints);
+        
+        handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+        
+        const response = buildSuccessApiResponse(finishDateResult);
+        console.log('FinishDateAPIHandler', JSON.stringify(response));
+        
+        return response;
+    }
+};
+
+// Date questions handler
+const questionhandle = function(handlerInput, questionName) {
+    
+    const apiRequest = handlerInput.requestEnvelope.request.apiRequest;
+    let user_response = resolveEntity(apiRequest.slots, map[questionName]["slot"]);
+    
+    let questionResult = {};
+    if (user_response !== null) {
+        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        const name = sessionAttributes.va_name;
+        const seed = sessionAttributes.seed;
+        const cur_ind = sessionAttributes.cur_ind; // current question index. TODO: add constraint for when index is out of bounds => should lead to ending dialogue
+
+        // TODO: might need to do some checking so users don't answer the same question repeatedly
+        // Maybe we can let them change their answer tho? might get messy on backend
+        const dbQuestion = data[name][map[questionName]["dbkey"]][user_response];
+        
+        let currentQuestion = data["questions"][seed[cur_ind-1]]["name"]
+        let answeredQuestion = map[questionName]["dbkey"]
+        
+        // Check if the correct answer was given for the correct question 
+        if (currentQuestion !== answeredQuestion) {
+            console.log("Mismatch for question and answer ", currentQuestion, answeredQuestion);
+            questionResult = speak("Please Try Again: An answer was given for the improper question. ")
+            const response = buildSuccessApiResponse(questionResult);
+            return response
+        }
+
+        const datePoints = dbQuestion.datePoints;
+        
+        let response = "";
+        if (datePoints === 30) {
+            response = dbQuestion.response;
+        } else if (datePoints === 20) {
+            response = neutral(name);
+        } else { // (datePoints === 10)
+            response = disliked(name);
+        }
+        
+        questionResult = speak(response + leadIn(name) + ask(seed[cur_ind]));
+        
+        if (cur_ind >=  sessionAttributes.redo_ind + 2) {
+            sessionAttributes.can_redo = true
+        }
+        
+        sessionAttributes.datePoints += datePoints;
+        sessionAttributes.addedPoints = datePoints;
+        sessionAttributes.cur_ind += 1;
+        console.log("Current date points are ", datePoints);
+        
+        handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+    }
+    
+    const response = buildSuccessApiResponse(questionResult);
+    console.log(questionName + 'Handler', JSON.stringify(response));
+    
+    return response;
+};
+
+const ChangeAnswerAPIHandler = { // TODO: perhaps add some sort of penalty for changing answer
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'changeAnswer');
+    },
+    
+    handle(handlerInput) {
+        
+        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        const name = sessionAttributes.va_name;
+        const seed = sessionAttributes.seed;
+        let redo_ind = sessionAttributes.cur_ind-2;
+        let can_redo = sessionAttributes.can_redo;
+        
+        if (redo_ind >= 0 && can_redo === true) {
+            const reprompt = speak(leadIn(name) + ask(seed[redo_ind])); // TODO: use different dialog when asking to redo question
+            
+            const previouspoints = sessionAttributes.addedPoints;
+            sessionAttributes.datePoints -= previouspoints;
+            sessionAttributes.cur_ind = sessionAttributes.cur_ind-1;
+            sessionAttributes.redo_ind = redo_ind;
+            sessionAttributes.can_redo = false;
+            sessionAttributes.addedPoints = 0;
+            handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+            
+            const response = buildSuccessApiResponse(reprompt);
+            console.log('ChangeAnswerAPIHandler', JSON.stringify(response));
+            
+            return response;
+            
+        } else {
+            let cur_ind = sessionAttributes.cur_ind-1;
+            console.log("Attempt to change answer that cannot be changed ");
+
+            const reprompt = speak("No you cannot. " + leadIn(name) + ask(seed[cur_ind])); // TODO: use more elegant dialog
+        
+            const response = buildSuccessApiResponse(reprompt);
+            return response;
+        }
+    }
+};    
+
+const FridayNightQuestionAPIHandler = {
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'fridayNightQuestion');
+    },
+    handle(handlerInput) {
+        return questionhandle(handlerInput, 'fridayNightQuestion');
+    }
+};
+
+const FirstDateQuestionAPIHandler = {
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'firstDateQuestion');
+    },
+    
+    handle(handlerInput) {
+        return questionhandle(handlerInput, 'firstDateQuestion');
+    }
+};
+
+const SuperPowerQuestionAPIHandler = {
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'superPowerQuestion');
+    },
+    
+    handle(handlerInput) {
+        return questionhandle(handlerInput, 'superPowerQuestion');
+    }
+};
+
+// TODO: tweak handlers for children (AMAZON.number) and fav color (AMAZON.color)
+
+const SpiritAnimalQuestionAPIHandler = {
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'spiritAnimalQuestion');
+    },
+    
+    handle(handlerInput) {
+        return questionhandle(handlerInput, 'spiritAnimalQuestion');
+    }
+};
+
+const MovieGenreQuestionAPIHandler = {
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'movieGenreQuestion');
+    },
+    
+    handle(handlerInput) {
+        return questionhandle(handlerInput, 'movieGenreQuestion');
+    }
+};
+
+const FaveSeasonQuestionAPIHandler = {
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'faveSeasonQuestion');
+    },
+    
+    handle(handlerInput) {
+        return questionhandle(handlerInput, 'faveSeasonQuestion');
+    }
+};
+
+const TattooLocationQuestionAPIHandler = {
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'tattooLocationQuestion');
+    },
+    
+    handle(handlerInput) {
+        return questionhandle(handlerInput, 'tattooLocationQuestion');
+    }
+};
+
+const OpenBusinessQuestionAPIHandler = {
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'openBusinessQuestion');
+    },
+    
+    handle(handlerInput) {
+        return questionhandle(handlerInput, 'openBusinessQuestion');
+    }
+};
+
+const DucksHorsesQuestionAPIHandler = {
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'ducksHorsesQuestion');
+    },
+    
+    handle(handlerInput) {
+        return questionhandle(handlerInput, 'ducksHorsesQuestion');
+    }
+};
+
+const DogsCatsQuestionAPIHandler = {
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'dogsCatsQuestion');
+    },
+    
+    handle(handlerInput) {
+        return questionhandle(handlerInput, 'dogsCatsQuestion');
+    }
+};
+
+const CoffeeTeaQuestionAPIHandler = {
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'coffeeTeaQuestion');
+    },
+    
+    handle(handlerInput) {
+        return questionhandle(handlerInput, 'coffeeTeaQuestion');
+    }
+};
+
+/*
 const FridayNightQuestionAPIHandler = {
     
     canHandle(handlerInput) {
@@ -88,7 +389,9 @@ const FridayNightQuestionAPIHandler = {
         if (fri_night !== null) {
             const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
             const name = sessionAttributes.va_name;
-            
+            const seed = sessionAttributes.seed;
+            const cur_ind = sessionAttributes.cur_ind + 1; // current question index. TODO: add constraint for when index is out of bounds => should lead to ending dialogue
+             
             const dbFriNight = data[name]["fridayNight"][fri_night];
             const datePoints = dbFriNight.datePoints;
             
@@ -101,9 +404,10 @@ const FridayNightQuestionAPIHandler = {
                 response = disliked(name);
             }
             
-            friNightResult = speak(response + leadIn(name) + ask());
+            friNightResult = speak(response + leadIn(name) + ask(seed[cur_ind]));
 
             sessionAttributes.datePoints += datePoints;
+            sessionAttributes.cur_ind += 1;
             console.log("Current date points are ", datePoints);
             
             handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
@@ -115,6 +419,52 @@ const FridayNightQuestionAPIHandler = {
         return response;
     }
 };
+
+const FirstDateQuestionAPIHandler = {
+    
+    canHandle(handlerInput) {
+        return util.isApiRequest(handlerInput, 'firstDateQuestion');
+    },
+    handle(handlerInput) {
+        
+        const apiRequest = handlerInput.requestEnvelope.request.apiRequest;
+        let first_date = resolveEntity(apiRequest.slots, "first_date");
+        
+        let firstDateResult = {};
+        if (first_date !== null) {
+            const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+            const name = sessionAttributes.va_name;
+            const seed = sessionAttributes.seed;
+            const cur_ind = sessionAttributes.cur_ind + 1;
+             
+            const dbFirstDate = data[name]["firstDate"][first_date];
+            const datePoints = dbFirstDate.datePoints;
+            
+            let response = "";
+            if (datePoints === 30) {
+                response = dbFirstDate.response;
+            } else if (datePoints === 20) {
+                response = neutral(name);
+            } else { // (datePoints === 10)
+                response = disliked(name);
+            }
+            
+            firstDateResult = speak(response + leadIn(name) + ask(seed[cur_ind]));
+
+            sessionAttributes.datePoints += datePoints;
+            sessionAttributes.cur_ind += 1;
+            console.log("Current date points are ", datePoints);
+            
+            handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+        }
+        
+        const response = buildSuccessApiResponse(firstDateResult);
+        console.log('firstDateQuestionHandler', JSON.stringify(response));
+        
+        return response;
+    }
+};
+*/
 
 const CheckDateStatusAPIHandler = {
     canHandle(handlerInput) {
@@ -296,7 +646,19 @@ exports.handler = Alexa.SkillBuilders.custom()
         CancelAndStopIntentHandler,
         SessionEndedRequestHandler,
         GoOnDateAPIHandler,
+        FinishDateAPIHandler,
+        ChangeAnswerAPIHandler,
         FridayNightQuestionAPIHandler,
+        FirstDateQuestionAPIHandler,
+        SuperPowerQuestionAPIHandler,
+        SpiritAnimalQuestionAPIHandler,
+        MovieGenreQuestionAPIHandler,
+        FaveSeasonQuestionAPIHandler,
+        TattooLocationQuestionAPIHandler,
+        OpenBusinessQuestionAPIHandler,
+        DucksHorsesQuestionAPIHandler,
+        DogsCatsQuestionAPIHandler,
+        CoffeeTeaQuestionAPIHandler,
         CheckDateStatusAPIHandler,
         IntentReflectorHandler, // make sure IntentReflectorHandler is last so it doesn't override your custom intent handlers
     )

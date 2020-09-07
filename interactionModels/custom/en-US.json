@@ -267,7 +267,7 @@
           "values": [
             {
               "name": {
-                "value": "all"
+                "value": "all seasons"
               }
             },
             {
@@ -277,7 +277,10 @@
             },
             {
               "name": {
-                "value": "fall"
+                "value": "fall",
+                "synonyms": [
+                  "autumn"
+                ]
               }
             },
             {
@@ -317,7 +320,10 @@
             },
             {
               "name": {
-                "value": "no tattoo"
+                "value": "no tattoo",
+                "synonyms": [
+                  "I would not get a tattoo"
+                ]
               }
             }
           ],
@@ -392,12 +398,21 @@
           "values": [
             {
               "name": {
-                "value": "cats"
+                "value": "cats",
+                "synonyms": [
+                  "feline",
+                  "kitten",
+                  "cat"
+                ]
               }
             },
             {
               "name": {
-                "value": "dogs"
+                "value": "dogs",
+                "synonyms": [
+                  "puppy",
+                  "dog"
+                ]
               }
             }
           ],
@@ -451,5 +466,5 @@
       ]
     }
   },
-  "version": "32"
+  "version": "40"
 }

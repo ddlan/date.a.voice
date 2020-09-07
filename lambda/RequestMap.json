@@ -1,0 +1,46 @@
+{
+    "fridayNightQuestion":{
+        "slot": "fri_night",
+        "dbkey": "fridayNight"
+    },
+    "firstDateQuestion":{
+        "slot": "first_date",
+        "dbkey": "firstDate"
+    },
+    "superPowerQuestion":{
+        "slot":"superpower",
+        "dbkey":"superPower"
+    },
+    "spiritAnimalQuestion":{
+        "slot":"animal",
+        "dbkey":"spiritAnimal"
+    },
+    "movieGenreQuestion":{
+        "slot":"movie",
+        "dbkey":"movieGenre"
+    },
+    "faveSeasonQuestion":{
+        "slot":"season",
+        "dbkey":"faveSeason"
+    },
+    "tattooLocationQuestion":{
+        "slot":"tattoo",
+        "dbkey":"tattooLocation"
+    },
+    "openBusinessQuestion":{
+        "slot":"business",
+        "dbkey":"openBusiness"
+    },
+    "ducksHorsesQuestion":{
+        "slot":"duck_horse",
+        "dbkey":"ducksHorses"
+    },
+    "dogsCatsQuestion":{
+        "slot":"dogs_cats",
+        "dbkey":"dogsCats"
+    },
+    "coffeeTeaQuestion":{
+        "slot":"coffee_tea",
+        "dbkey":"coffeeTea"
+    }
+}
