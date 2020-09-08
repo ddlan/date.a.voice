@@ -1,8 +1,16 @@
 {
     "_comment1": "We don't need to include <speak> tags, we have a helper to put that in.",
     "_comment2": "For simplicity's sake, let's make ideal = 30, neutral = 20, disliked = 10 points.",
-    "_comment3": "Then we can do a check, if 30 points, use ideal response, otherwise, use neutral/disliked",
+    "_comment3": "For two option questions, e.g. dogs vs cats, ideal is 25 and disliked is 15",
+    "_comment4": "Then we can do a check, if 30 points, use ideal response, otherwise, use neutral/disliked",
     
+    "redoLeadin": [
+        "Changed your mind? ",
+        "You have a different answer? ",
+        "Oh not that answer? ",
+        "Something else you want to say? ",
+        "Okay, answer again. "
+    ],
     "questions": [
         {
             "name": "fridayNight",
@@ -13,8 +21,8 @@
             "text": "What would you say is your ideal first date, a tennis date, date on a yacht, the museum, skydiving, or picnic at the park?"
         },
         {
-            "name": "superPower",
-            "text": "If you could have a superpower, would you choose telepathy, invulnerability, money slash influence, super speed, or mind control?"
+            "name": "superpower",
+            "text": "If you could have a superpower, would you choose telepathy, invulnerability, being rich and beautiful, super speed, or mind control?"
         },
         {
             "name": "numChildren",
@@ -127,19 +135,19 @@
                 "datePoints": 20
             },
             "skydiving":{
-                "datePoints": 20
+                "datePoints": 10
             },
             "picnic at the park":{
                 "datePoints": 10
             }
         },
-        "superPower": {
+        "superpower": {
             "super speed": {
                 "datePoints": 30,
                 "response": "Yes! Think of all I could get done if I had super speed. "
             },
             "rich and beautiful":{
-                "datePoints": 20
+                "datePoints": 10
             },
             "telepathy":{
                 "datePoints": 20
@@ -151,6 +159,38 @@
                 "datePoints": 10
             }
         },
+        "numChildren": {
+            "ideal": 3,
+            "response": "I agree. I wouldn't mind having a larger family, lively is better. "
+        },
+        "faveColor": {
+            "blue": {
+                "datePoints": 30,
+                "response": "I knew it! There's something about the color blue that's so calming. I like aqua blue the most. "
+            },
+            "green": {
+                "datePoints": 20
+            },
+            "red": {
+                "datePoints": 10
+            },
+            "yellow": {
+                "datePoints": 20
+            },
+            "purple": {
+                "datePoints": 20
+            },
+            "orange": {
+                "datePoints": 10
+            },
+            "black": {
+                "datePoints": 30,
+                "response": "Black is such a sleek and beautiful color. "
+            },
+            "white": {
+                "datePoints": 20
+            }
+        },
         "spiritAnimal":{
             "shark":{
                 "datePoints": 30,
@@ -160,13 +200,13 @@
                 "datePoints": 20
             },
             "elephant":{
-                "datePoints": 20
+                "datePoints": 10
             },
             "eagle":{
-                "datePoints": 20
+                "datePoints": 10
             },
             "turtle":{
-                "datePoints": 10
+                "datePoints": 20
             }
         },
         "movieGenre":{
@@ -175,16 +215,16 @@
                 "response": "I'm with you on this one. Isn't it so cool to think about what's going down in the character's heads? "
             },
             "romance":{
-                "datePoints": 20
+                "datePoints": 10
             },
             "documentary":{
                 "datePoints": 20
             },
             "horror":{
-                "datePoints": 20
+                "datePoints": 10
             },
             "comedy":{
-                "datePoints": 10
+                "datePoints": 20
             }
         },
         "faveSeason":{
@@ -195,7 +235,7 @@
             "fall":{
                 "datePoints": 20
             },
-            "all":{
+            "all seasons":{
                 "datePoints": 20
             },
             "summer":{
@@ -244,7 +284,7 @@
         "ducksHorses":{
             "one hundred duck-sized horses":{
                 "datePoints": 25,
-                "response": "placeholder"
+                "response": "Yeah, I feel like the small horses would be slow enough to outrun and not be overwhelmed."
             },
             "one horse sized duck":{
                 "datePoints": 15
@@ -253,7 +293,7 @@
         "dogsCats":{
             "dogs":{
                 "datePoints": 25,
-                "response": "placeholder"
+                "response": "Yes! Nothing like the unconditional love of a dog."
             },
             "cats":{
                 "datePoints": 15
@@ -262,7 +302,7 @@
         "coffeeTea":{
             "coffee":{
                 "datePoints": 25,
-                "response": "placeholder"
+                "response": "Me too! Can't start my day off without a fresh cup of coffee."
             },
             "tea":{
                 "datePoints": 15
@@ -271,7 +311,7 @@
     },
     
     "siri": {
-               "leadin": [
+        "leadin": [
             "I'm curious to know, ",
             "I have something on my mind, ",
             "I see, next question, ",
@@ -345,7 +385,7 @@
                 "datePoints": 20
             }
         },
-        "superPower": {
+        "superpower": {
             "super speed": {
                 "datePoints": 10
             },

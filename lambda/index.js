@@ -20,18 +20,25 @@ const leadIn = function(name) {
     return dbName["leadin"][index] + "<break strength='medium'/>";
 };
 
+const redoLeadIn = function() {
+    const index = Math.floor(Math.random() * 5);
+    
+    return data["redoLeadin"][index] + "<break strength='medium'/>";
+};
+
+
 const neutral = function(name) {
     const dbName = data[name];
     const index = Math.floor(Math.random() * 3);
     
-    return dbName["neutral"][index] + "<break time='2s' />";
+    return dbName["neutral"][index] + "<break time='1.5s' />";
 };
 
 const disliked = function(name) {
     const dbName = data[name];
     const index = Math.floor(Math.random() * 3);
     
-    return dbName["disliked"][index] + "<break time='2s' />";
+    return dbName["disliked"][index] + "<break time='1.5s' />";
 };
 
 // *****************************************************************************
@@ -39,7 +46,7 @@ const disliked = function(name) {
 // *****************************************************************************
 
 // function to generate a random seed for questions
-const qindex = [...Array(14).keys()];
+const qindex = [...Array(13).keys()];
 
 // Function to randomly pick x distinct elements from an array
 const shuffle = function(array) {
@@ -58,11 +65,10 @@ const ask = function(ind) {
 // *****************************************************************************
 // SESSION ATTRIBUTES FORMAT
 //      datePoints          int : current points
-//      addedPoints         int : points from last answer (used to redo)
+//      prevAnswerPoints    int : points from prev answer
 //      va_name          string : name of current date partner
-//      cur_ind             int : index of current question (1 indexed?)
-//      redo_ind            int : index of last "redone" question
-//      can_redo           bool : if the user is allowed to redo the current question. User cannot redo a question twice
+//      cur_ind             int : index of current asked question
+//      redo_ind            int : index of previously redone question
 //      seed              [int] : array of question numbers to ask user e.g. [10,4,3,9,7,0]
 //
 // *****************************************************************************
@@ -83,7 +89,7 @@ const GoOnDateAPIHandler = {
         
         let name = resolveEntity(apiRequest.slots, "va_name");
         let location = resolveEntity(apiRequest.slots, "date_location");
-        let seed = [0,1,2,3,4,5]; //shuffle(qindex);
+        let seed = [3,4,5,6,7,8]; //shuffle(qindex);
         
         let goOnDateResult = {};
         if (name !== null && location !== null) {
@@ -96,11 +102,10 @@ const GoOnDateAPIHandler = {
             const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
             sessionAttributes.datePoints = datePoints;
-            sessionAttributes.addedPoints = datePoints;
+            sessionAttributes.prevAnswerPoints = datePoints;
             sessionAttributes.va_name = name;
-            sessionAttributes.cur_ind = 1;
-            sessionAttributes.redo_ind = 0;
-            sessionAttributes.can_redo = true;
+            sessionAttributes.cur_ind = 0;
+            sessionAttributes.redo_ind = -1;
             sessionAttributes.seed = seed;
             console.log("Current date points are ", datePoints);
             
@@ -144,13 +149,12 @@ const FinishDateAPIHandler = {
             outcome = data[name]["outcome"]["poor"];
         }
         
-        finishDateResult = speak(outcome + " try again?");
+        finishDateResult = speak(outcome + " Would you like to try again? You can pick the same or a different partner. ");
         
         sessionAttributes.datePoints = 0;
         sessionAttributes.va_name = "";
         sessionAttributes.cur_ind = 0;
-        sessionAttributes.redo_ind = 0;
-        sessionAttributes.can_redo = null;
+        sessionAttributes.redo_ind = -1;
         sessionAttributes.seed = null;
         console.log("Current date points are ", datePoints);
         
@@ -167,7 +171,13 @@ const FinishDateAPIHandler = {
 const questionhandle = function(handlerInput, questionName) {
     
     const apiRequest = handlerInput.requestEnvelope.request.apiRequest;
-    let user_response = resolveEntity(apiRequest.slots, map[questionName]["slot"]);
+    
+    let user_response = {};
+    if (questionName === "numChildrenQuestion") { // can't use resolveEntity() for this one
+        user_response = apiRequest.arguments[map[questionName]["slot"]];
+    } else {
+        user_response = resolveEntity(apiRequest.slots, map[questionName]["slot"]);
+    }
     
     let questionResult = {};
     if (user_response !== null) {
@@ -175,41 +185,46 @@ const questionhandle = function(handlerInput, questionName) {
         const name = sessionAttributes.va_name;
         const seed = sessionAttributes.seed;
         const cur_ind = sessionAttributes.cur_ind; // current question index. TODO: add constraint for when index is out of bounds => should lead to ending dialogue
-
-        // TODO: might need to do some checking so users don't answer the same question repeatedly
-        // Maybe we can let them change their answer tho? might get messy on backend
-        const dbQuestion = data[name][map[questionName]["dbkey"]][user_response];
         
-        let currentQuestion = data["questions"][seed[cur_ind-1]]["name"]
-        let answeredQuestion = map[questionName]["dbkey"]
+        let currentQuestion = data["questions"][seed[cur_ind]]["name"];
+        let answeredQuestion = map[questionName]["dbkey"];
         
         // Check if the correct answer was given for the correct question 
         if (currentQuestion !== answeredQuestion) {
             console.log("Mismatch for question and answer ", currentQuestion, answeredQuestion);
-            questionResult = speak("Please Try Again: An answer was given for the improper question. ")
+            questionResult = speak("I don't understand your answer. I'll ask again. " + ask(seed[cur_ind]));
             const response = buildSuccessApiResponse(questionResult);
-            return response
+            return response;
         }
+        
+        let dbQuestion = data[name][map[questionName]["dbkey"]][user_response];
+        
+        let datePoints = 0;
+        if (dbQuestion !== undefined) { // Not faveColor or numChildren
+            datePoints = dbQuestion.datePoints;
+        } else if (questionName === "faveColorQuestion") { // If color is not in the database, just give 20 points
+            datePoints = 20;
+        } else if (questionName === "numChildrenQuestion") {  // Points for numChildren is 30 if exact, and -5 for every 1 child off, down to a minimum of 10 points
+            dbQuestion = data[name][map[questionName]["dbkey"]];
+            const ideal = dbQuestion.ideal;
 
-        const datePoints = dbQuestion.datePoints;
+            datePoints = Math.max(10, 30 - 5 * Math.abs(ideal-user_response));
+        }
         
         let response = "";
-        if (datePoints === 30) {
+        if (datePoints >= 25) {                 // 25 or 30 for perfect answer
             response = dbQuestion.response;
-        } else if (datePoints === 20) {
+        } else if (datePoints === 20) {         // 20 for neutral answer
             response = neutral(name);
-        } else { // (datePoints === 10)
+        } else {                                // 10 or 15 for disliked answer
             response = disliked(name);
         }
         
-        questionResult = speak(response + leadIn(name) + ask(seed[cur_ind]));
         
-        if (cur_ind >=  sessionAttributes.redo_ind + 2) {
-            sessionAttributes.can_redo = true
-        }
+        questionResult = speak(response + leadIn(name) + ask(seed[cur_ind+1]));
         
         sessionAttributes.datePoints += datePoints;
-        sessionAttributes.addedPoints = datePoints;
+        sessionAttributes.prevAnswerPoints = datePoints;
         sessionAttributes.cur_ind += 1;
         console.log("Current date points are ", datePoints);
         
@@ -232,18 +247,16 @@ const ChangeAnswerAPIHandler = { // TODO: perhaps add some sort of penalty for c
         const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
         const name = sessionAttributes.va_name;
         const seed = sessionAttributes.seed;
-        let redo_ind = sessionAttributes.cur_ind-2;
-        let can_redo = sessionAttributes.can_redo;
+        const cur_ind = sessionAttributes.cur_ind;
+        const redo_ind = sessionAttributes.redo_ind;
         
-        if (redo_ind >= 0 && can_redo === true) {
-            const reprompt = speak(leadIn(name) + ask(seed[redo_ind])); // TODO: use different dialog when asking to redo question
+        if (redo_ind < cur_ind-1) {
+            const reprompt = speak(redoLeadIn() + ask(seed[cur_ind-1])); // TODO: use different dialog when asking to redo question
             
-            const previouspoints = sessionAttributes.addedPoints;
-            sessionAttributes.datePoints -= previouspoints;
-            sessionAttributes.cur_ind = sessionAttributes.cur_ind-1;
-            sessionAttributes.redo_ind = redo_ind;
-            sessionAttributes.can_redo = false;
-            sessionAttributes.addedPoints = 0;
+            sessionAttributes.datePoints -= sessionAttributes.prevAnswerPoints;
+            sessionAttributes.prevAnswerPoints = 0;
+            sessionAttributes.cur_ind = cur_ind-1;
+            sessionAttributes.redo_ind = cur_ind-1;
             handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
             
             const response = buildSuccessApiResponse(reprompt);
@@ -252,10 +265,10 @@ const ChangeAnswerAPIHandler = { // TODO: perhaps add some sort of penalty for c
             return response;
             
         } else {
-            let cur_ind = sessionAttributes.cur_ind-1;
+            let cur_ind = sessionAttributes.cur_ind;
             console.log("Attempt to change answer that cannot be changed ");
 
-            const reprompt = speak("No you cannot. " + leadIn(name) + ask(seed[cur_ind])); // TODO: use more elegant dialog
+            const reprompt = speak("You can't change your mind again! Next question, " + ask(seed[cur_ind])); // TODO: use more elegant dialog
         
             const response = buildSuccessApiResponse(reprompt);
             return response;
@@ -264,114 +277,56 @@ const ChangeAnswerAPIHandler = { // TODO: perhaps add some sort of penalty for c
 };    
 
 const FridayNightQuestionAPIHandler = {
-    canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'fridayNightQuestion');
-    },
-    handle(handlerInput) {
-        return questionhandle(handlerInput, 'fridayNightQuestion');
-    }
+    canHandle(handlerInput) { return util.isApiRequest(handlerInput, 'fridayNightQuestion'); },
+    handle(handlerInput) { return questionhandle(handlerInput,       'fridayNightQuestion'); }
 };
-
 const FirstDateQuestionAPIHandler = {
-    canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'firstDateQuestion');
-    },
-    
-    handle(handlerInput) {
-        return questionhandle(handlerInput, 'firstDateQuestion');
-    }
+    canHandle(handlerInput) { return util.isApiRequest(handlerInput, 'firstDateQuestion'); },
+    handle(handlerInput) { return questionhandle(handlerInput,       'firstDateQuestion'); }
 };
-
-const SuperPowerQuestionAPIHandler = {
-    canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'superPowerQuestion');
-    },
-    
-    handle(handlerInput) {
-        return questionhandle(handlerInput, 'superPowerQuestion');
-    }
+const SuperpowerQuestionAPIHandler = {
+    canHandle(handlerInput) { return util.isApiRequest(handlerInput, 'superpowerQuestion'); },
+    handle(handlerInput) { return questionhandle(handlerInput,       'superpowerQuestion'); }
 };
-
-// TODO: tweak handlers for children (AMAZON.number) and fav color (AMAZON.color)
-
+const NumChildrenQuestionAPIHandler = {
+    canHandle(handlerInput) { return util.isApiRequest(handlerInput, 'numChildrenQuestion'); },
+    handle(handlerInput) { return questionhandle(handlerInput,       'numChildrenQuestion'); }
+};
+const FaveColorQuestionAPIHandler = {
+    canHandle(handlerInput) { return util.isApiRequest(handlerInput, 'faveColorQuestion'); },
+    handle(handlerInput) { return questionhandle(handlerInput,       'faveColorQuestion'); }
+};
 const SpiritAnimalQuestionAPIHandler = {
-    canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'spiritAnimalQuestion');
-    },
-    
-    handle(handlerInput) {
-        return questionhandle(handlerInput, 'spiritAnimalQuestion');
-    }
+    canHandle(handlerInput) { return util.isApiRequest(handlerInput, 'spiritAnimalQuestion'); },
+    handle(handlerInput) { return questionhandle(handlerInput,       'spiritAnimalQuestion'); }
 };
-
 const MovieGenreQuestionAPIHandler = {
-    canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'movieGenreQuestion');
-    },
-    
-    handle(handlerInput) {
-        return questionhandle(handlerInput, 'movieGenreQuestion');
-    }
+    canHandle(handlerInput) { return util.isApiRequest(handlerInput, 'movieGenreQuestion'); },
+    handle(handlerInput) { return questionhandle(handlerInput,       'movieGenreQuestion'); }
 };
-
 const FaveSeasonQuestionAPIHandler = {
-    canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'faveSeasonQuestion');
-    },
-    
-    handle(handlerInput) {
-        return questionhandle(handlerInput, 'faveSeasonQuestion');
-    }
+    canHandle(handlerInput) { return util.isApiRequest(handlerInput, 'faveSeasonQuestion'); },
+    handle(handlerInput) { return questionhandle(handlerInput,       'faveSeasonQuestion'); }
 };
-
 const TattooLocationQuestionAPIHandler = {
-    canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'tattooLocationQuestion');
-    },
-    
-    handle(handlerInput) {
-        return questionhandle(handlerInput, 'tattooLocationQuestion');
-    }
+    canHandle(handlerInput) { return util.isApiRequest(handlerInput, 'tattooLocationQuestion'); },
+    handle(handlerInput) { return questionhandle(handlerInput,       'tattooLocationQuestion'); }
 };
-
 const OpenBusinessQuestionAPIHandler = {
-    canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'openBusinessQuestion');
-    },
-    
-    handle(handlerInput) {
-        return questionhandle(handlerInput, 'openBusinessQuestion');
-    }
+    canHandle(handlerInput) { return util.isApiRequest(handlerInput, 'openBusinessQuestion'); },
+    handle(handlerInput) { return questionhandle(handlerInput,       'openBusinessQuestion'); }
 };
-
 const DucksHorsesQuestionAPIHandler = {
-    canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'ducksHorsesQuestion');
-    },
-    
-    handle(handlerInput) {
-        return questionhandle(handlerInput, 'ducksHorsesQuestion');
-    }
+    canHandle(handlerInput) { return util.isApiRequest(handlerInput, 'ducksHorsesQuestion'); },
+    handle(handlerInput) { return questionhandle(handlerInput,       'ducksHorsesQuestion'); }
 };
-
 const DogsCatsQuestionAPIHandler = {
-    canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'dogsCatsQuestion');
-    },
-    
-    handle(handlerInput) {
-        return questionhandle(handlerInput, 'dogsCatsQuestion');
-    }
+    canHandle(handlerInput) { return util.isApiRequest(handlerInput, 'dogsCatsQuestion'); },
+    handle(handlerInput) { return questionhandle(handlerInput,       'dogsCatsQuestion'); }
 };
-
 const CoffeeTeaQuestionAPIHandler = {
-    canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'coffeeTeaQuestion');
-    },
-    
-    handle(handlerInput) {
-        return questionhandle(handlerInput, 'coffeeTeaQuestion');
-    }
+    canHandle(handlerInput) { return util.isApiRequest(handlerInput, 'coffeeTeaQuestion'); },
+    handle(handlerInput) { return questionhandle(handlerInput, '      coffeeTeaQuestion'); }
 };
 
 /*
@@ -650,7 +605,9 @@ exports.handler = Alexa.SkillBuilders.custom()
         ChangeAnswerAPIHandler,
         FridayNightQuestionAPIHandler,
         FirstDateQuestionAPIHandler,
-        SuperPowerQuestionAPIHandler,
+        SuperpowerQuestionAPIHandler,
+        NumChildrenQuestionAPIHandler,
+        FaveColorQuestionAPIHandler,
         SpiritAnimalQuestionAPIHandler,
         MovieGenreQuestionAPIHandler,
         FaveSeasonQuestionAPIHandler,

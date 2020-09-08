@@ -7,9 +7,17 @@
         "slot": "first_date",
         "dbkey": "firstDate"
     },
-    "superPowerQuestion":{
+    "superpowerQuestion":{
         "slot":"superpower",
-        "dbkey":"superPower"
+        "dbkey":"superpower"
+    },
+    "numChildrenQuestion":{
+        "slot":"num_children",
+        "dbkey":"numChildren"
+    },
+    "faveColorQuestion":{
+        "slot":"color",
+        "dbkey":"faveColor"
     },
     "spiritAnimalQuestion":{
         "slot":"animal",
