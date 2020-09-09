@@ -89,7 +89,7 @@ const GoOnDateAPIHandler = {
         
         let name = resolveEntity(apiRequest.slots, "va_name");
         let location = resolveEntity(apiRequest.slots, "date_location");
-        let seed = [3,4,5,6,7,8]; //shuffle(qindex);
+        let seed = shuffle(qindex);
         
         let goOnDateResult = {};
         if (name !== null && location !== null) {
@@ -173,7 +173,7 @@ const questionhandle = function(handlerInput, questionName) {
     const apiRequest = handlerInput.requestEnvelope.request.apiRequest;
     
     let user_response = {};
-    if (questionName === "numChildrenQuestion") { // can't use resolveEntity() for this one
+    if (questionName === "numChildrenQuestion" || questionName === "faveColorQuestion") { // can't use resolveEntity() for this one
         user_response = apiRequest.arguments[map[questionName]["slot"]];
     } else {
         user_response = resolveEntity(apiRequest.slots, map[questionName]["slot"]);
@@ -326,100 +326,9 @@ const DogsCatsQuestionAPIHandler = {
 };
 const CoffeeTeaQuestionAPIHandler = {
     canHandle(handlerInput) { return util.isApiRequest(handlerInput, 'coffeeTeaQuestion'); },
-    handle(handlerInput) { return questionhandle(handlerInput, '      coffeeTeaQuestion'); }
+    handle(handlerInput) { return questionhandle(handlerInput,       'coffeeTeaQuestion'); }
 };
 
-/*
-const FridayNightQuestionAPIHandler = {
-    
-    canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'fridayNightQuestion');
-    },
-    handle(handlerInput) {
-        
-        const apiRequest = handlerInput.requestEnvelope.request.apiRequest;
-        let fri_night = resolveEntity(apiRequest.slots, "fri_night");
-        
-        let friNightResult = {};
-        if (fri_night !== null) {
-            const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-            const name = sessionAttributes.va_name;
-            const seed = sessionAttributes.seed;
-            const cur_ind = sessionAttributes.cur_ind + 1; // current question index. TODO: add constraint for when index is out of bounds => should lead to ending dialogue
-             
-            const dbFriNight = data[name]["fridayNight"][fri_night];
-            const datePoints = dbFriNight.datePoints;
-            
-            let response = "";
-            if (datePoints === 30) {
-                response = dbFriNight.response;
-            } else if (datePoints === 20) {
-                response = neutral(name);
-            } else { // (datePoints === 10)
-                response = disliked(name);
-            }
-            
-            friNightResult = speak(response + leadIn(name) + ask(seed[cur_ind]));
-
-            sessionAttributes.datePoints += datePoints;
-            sessionAttributes.cur_ind += 1;
-            console.log("Current date points are ", datePoints);
-            
-            handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-        }
-        
-        const response = buildSuccessApiResponse(friNightResult);
-        console.log('fridayNightQuestionHandler', JSON.stringify(response));
-        
-        return response;
-    }
-};
-
-const FirstDateQuestionAPIHandler = {
-    
-    canHandle(handlerInput) {
-        return util.isApiRequest(handlerInput, 'firstDateQuestion');
-    },
-    handle(handlerInput) {
-        
-        const apiRequest = handlerInput.requestEnvelope.request.apiRequest;
-        let first_date = resolveEntity(apiRequest.slots, "first_date");
-        
-        let firstDateResult = {};
-        if (first_date !== null) {
-            const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-            const name = sessionAttributes.va_name;
-            const seed = sessionAttributes.seed;
-            const cur_ind = sessionAttributes.cur_ind + 1;
-             
-            const dbFirstDate = data[name]["firstDate"][first_date];
-            const datePoints = dbFirstDate.datePoints;
-            
-            let response = "";
-            if (datePoints === 30) {
-                response = dbFirstDate.response;
-            } else if (datePoints === 20) {
-                response = neutral(name);
-            } else { // (datePoints === 10)
-                response = disliked(name);
-            }
-            
-            firstDateResult = speak(response + leadIn(name) + ask(seed[cur_ind]));
-
-            sessionAttributes.datePoints += datePoints;
-            sessionAttributes.cur_ind += 1;
-            console.log("Current date points are ", datePoints);
-            
-            handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
-        }
-        
-        const response = buildSuccessApiResponse(firstDateResult);
-        console.log('firstDateQuestionHandler', JSON.stringify(response));
-        
-        return response;
-    }
-};
-*/
 
 const CheckDateStatusAPIHandler = {
     canHandle(handlerInput) {

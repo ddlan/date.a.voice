@@ -1,7 +1,100 @@
 {
   "manifest": {
+    "publishingInformation": {
+      "locales": {
+        "en-US": {
+          "summary": "Date.A.Voice presents the first ever \"voice assistant\" dating simulator. It\u0027s the perfect time to practice your dating skills and try wooing a virtual partner!",
+          "examplePhrases": [
+            "Alexa open date a voice",
+            "I want to go on a date with Siri to the restaurant",
+            "My ideal friday night is going on a shopping trip"
+          ],
+          "keywords": [
+            "Dating",
+            "Sim",
+            "Alexa",
+            "Siri",
+            "Cortana",
+            "Google",
+            "Bixby",
+            "Date",
+            "Romance"
+          ],
+          "name": "date.a.voice",
+          "description": "Date.A.Voice presents the first ever \"voice assistant\" dating simulator, now accessible exclusively on Amazon Alexa. Now is the perfect time to practice your dating skills and try wooing a virtual partner!",
+          "smallIconUri": "file://assets/images/en-US_smallIconUri.png",
+          "largeIconUri": "file://assets/images/en-US_largeIconUri.png"
+        }
+      },
+      "automaticDistribution": {
+        "isActive": false
+      },
+      "isAvailableWorldwide": true,
+      "testingInstructions": "Generally you can follow the audio prompts. Example dialogue:\nUser: \"I want to go on a date with Alexa\"\nAlexa: \"Cool ... Where would you like to go, the beach, the restaurant or the arcade?\"\nUser: \"The beach\"\nAlexa: \"Great! ... Tell me something, what\u0027s your favourite color\"\nUser: \"My favourite color is blue\"\nAlexa: \"Me too! What\u0027s your favourite season?\"\n...\nAlexa: \"It\u0027s getting late, shall we get going? Say \u0027let\u0027s finish the date\u0027\"\nUser: \"Let\u0027s finish the date\"\nAlexa: \"I had an amazing time! Let\u0027s do this again!\"",
+      "category": "NOVELTY_\u0026_HUMOR_GAMES",
+      "distributionCountries": []
+    },
     "apis": {
       "custom": {
+        "endpoint": {
+          "uri": "arn:aws:lambda:us-east-1:592483114120:function:637b30a4-f096-4ca3-948f-a3de5c99c20b:Release_0"
+        },
+        "interfaces": [
+          {
+            "supportedViewports": [
+              {
+                "minHeight": 480,
+                "mode": "HUB",
+                "shape": "ROUND",
+                "maxHeight": 480,
+                "minWidth": 480,
+                "maxWidth": 480
+              },
+              {
+                "minHeight": 600,
+                "mode": "HUB",
+                "shape": "RECTANGLE",
+                "maxHeight": 600,
+                "minWidth": 1024,
+                "maxWidth": 1024
+              },
+              {
+                "minHeight": 800,
+                "mode": "HUB",
+                "shape": "RECTANGLE",
+                "maxHeight": 800,
+                "minWidth": 1280,
+                "maxWidth": 1280
+              },
+              {
+                "minHeight": 540,
+                "mode": "TV",
+                "shape": "RECTANGLE",
+                "maxHeight": 540,
+                "minWidth": 960,
+                "maxWidth": 960
+              }
+            ],
+            "type": "ALEXA_PRESENTATION_APL"
+          }
+        ],
+        "regions": {
+          "EU": {
+            "endpoint": {
+              "uri": "arn:aws:lambda:eu-west-1:592483114120:function:637b30a4-f096-4ca3-948f-a3de5c99c20b:Release_0"
+            }
+          },
+          "NA": {
+            "endpoint": {
+              "uri": "arn:aws:lambda:us-east-1:592483114120:function:637b30a4-f096-4ca3-948f-a3de5c99c20b:Release_0"
+            }
+          },
+          "FE": {
+            "endpoint": {
+              "uri": "arn:aws:lambda:us-west-2:592483114120:function:637b30a4-f096-4ca3-948f-a3de5c99c20b:Release_0"
+            }
+          }
+        },
         "dialogManagement": {
           "dialogManagers": [
             {
@@ -11,87 +104,19 @@
           "sessionStartDelegationStrategy": {
             "target": "AMAZON.Conversations"
           }
-        },
-        "endpoint": {
-          "uri": "arn:aws:lambda:us-east-1:592483114120:function:637b30a4-f096-4ca3-948f-a3de5c99c20b:Release_0"
-        },
-        "interfaces": [
-          {
-            "supportedViewports": [
-              {
-                "maxHeight": 480,
-                "maxWidth": 480,
-                "minHeight": 480,
-                "minWidth": 480,
-                "mode": "HUB",
-                "shape": "ROUND"
-              },
-              {
-                "maxHeight": 600,
-                "maxWidth": 1024,
-                "minHeight": 600,
-                "minWidth": 1024,
-                "mode": "HUB",
-                "shape": "RECTANGLE"
-              },
-              {
-                "maxHeight": 800,
-                "maxWidth": 1280,
-                "minHeight": 800,
-                "minWidth": 1280,
-                "mode": "HUB",
-                "shape": "RECTANGLE"
-              },
-              {
-                "maxHeight": 540,
-                "maxWidth": 960,
-                "minHeight": 540,
-                "minWidth": 960,
-                "mode": "TV",
-                "shape": "RECTANGLE"
-              }
-            ],
-            "type": "ALEXA_PRESENTATION_APL"
-          }
-        ],
-        "regions": {
-          "NA": {
-            "endpoint": {
-              "uri": "arn:aws:lambda:us-east-1:592483114120:function:637b30a4-f096-4ca3-948f-a3de5c99c20b:Release_0"
-            }
-          },
-          "EU": {
-            "endpoint": {
-              "uri": "arn:aws:lambda:eu-west-1:592483114120:function:637b30a4-f096-4ca3-948f-a3de5c99c20b:Release_0"
-            }
-          },
-          "FE": {
-            "endpoint": {
-              "uri": "arn:aws:lambda:us-west-2:592483114120:function:637b30a4-f096-4ca3-948f-a3de5c99c20b:Release_0"
-            }
-          }
         }
       }
     },
     "manifestVersion": "1.0",
-    "publishingInformation": {
-      "category": "KNOWLEDGE_AND_TRIVIA",
-      "distributionCountries": [],
-      "isAvailableWorldwide": true,
+    "privacyAndCompliance": {
+      "allowsPurchases": false,
       "locales": {
-        "en-US": {
-          "description": "Sample Full Description",
-          "examplePhrases": [
-            "Alexa open hello world",
-            "hello",
-            "help"
-          ],
-          "keywords": [],
-          "name": "date.a.voice",
-          "summary": "Sample Short Description"
-        }
+        "en-US": {}
       },
-      "testingInstructions": "Sample Testing Instructions."
+      "containsAds": false,
+      "isExportCompliant": true,
+      "isChildDirected": false,
+      "usesPersonalInfo": false
     }
   }
 }

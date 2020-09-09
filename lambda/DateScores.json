@@ -54,7 +54,7 @@
         },
         {
             "name": "ducksHorses",
-            "text": "Crazy question I know. Would you rather fight one horse sized duck, or 100 duck sized horses? Work with me here."
+            "text": "Crazy question I know. Would you rather fight one horse sized duck, or one hundred duck sized horses? Work with me here."
         },
         {
             "name": "dogsCats",
@@ -284,7 +284,7 @@
         "ducksHorses":{
             "one hundred duck-sized horses":{
                 "datePoints": 25,
-                "response": "Yeah, I feel like the small horses would be slow enough to outrun and not be overwhelmed."
+                "response": "Yeah, I feel like the small horses would be slow enough to outrun and not be overwhelmed. "
             },
             "one horse sized duck":{
                 "datePoints": 15
@@ -293,7 +293,7 @@
         "dogsCats":{
             "dogs":{
                 "datePoints": 25,
-                "response": "Yes! Nothing like the unconditional love of a dog."
+                "response": "Yes! Nothing like the unconditional love of a dog. "
             },
             "cats":{
                 "datePoints": 15
@@ -302,7 +302,7 @@
         "coffeeTea":{
             "coffee":{
                 "datePoints": 25,
-                "response": "Me too! Can't start my day off without a fresh cup of coffee."
+                "response": "Me too! Can't start my day off without a fresh cup of coffee. "
             },
             "tea":{
                 "datePoints": 15
@@ -401,6 +401,41 @@
             },
             "invulnerability":{
                 "datePoints": 10
+            }
+        },
+        "numChildren": {
+            "ideal": 1,
+            "response": "Same, 1 is already a handful  "
+        },
+        "faveColor": {
+            "blue": {
+                "datePoints": 10
+            },
+            "green": {
+                "datePoints": 10
+            },
+            "red": {
+                "datePoints": 20
+            },
+            "yellow": {
+                "datePoints": 10
+            },
+            "purple": {
+                "datePoints": 20
+            },
+            "orange": {
+                "datePoints": 10
+            },
+            "black": {
+                "datePoints": 20
+            },
+            "white": {
+                "datePoints": 30,
+                "response": "White is a great color! It represents purity, simplicity, and cleanliness. "
+            },
+            "gold": {
+                "datePoints": 30,
+                "response": "Rose gold is my absolute favourite! Did you know it represents luxury and calmness?"
             }
         },
         "spiritAnimal":{
