@@ -13,6 +13,22 @@ const speak = function(speech) {
     return `<speak>${speech}</speak>`;
 };
 
+const speakAs = function(name, speech) {
+    let charSpeech = speech;
+    
+    if (name === "siri") {
+        charSpeech = `<voice name='Joanna'>${speech}</voice>`;
+    } else if (name === 'google') {
+        charSpeech = `<voice name='Nicole'>${speech}</voice>`;
+    } else if (name === 'cortana') {
+        charSpeech = `<voice name='Salli'>${speech}</voice>`;
+    } else if (name === 'bixby') {
+        charSpeech = `<voice name='Amy'>${speech}</voice>`;
+    } // else its alexa, no voice needed
+    
+    return speak(charSpeech);
+};
+
 const leadIn = function(name) {
     const dbName = data[name];
     const index = Math.floor(Math.random() * 5);
@@ -97,13 +113,14 @@ const GoOnDateAPIHandler = {
             const dbLocation = data[name][location];
             const datePoints = dbLocation.datePoints;
             
-            goOnDateResult = speak(dbLocation.response + dbLocation.start + leadIn(name) + ask(seed[0]));
+            goOnDateResult = speakAs(name, dbLocation.response + dbLocation.start + leadIn(name) + ask(seed[0]));
             
             const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
 
             sessionAttributes.datePoints = datePoints;
             sessionAttributes.prevAnswerPoints = datePoints;
             sessionAttributes.va_name = name;
+            sessionAttributes.date_location = location;
             sessionAttributes.cur_ind = 0;
             sessionAttributes.redo_ind = -1;
             sessionAttributes.seed = seed;
@@ -128,28 +145,41 @@ const FinishDateAPIHandler = {
         
         const apiRequest = handlerInput.requestEnvelope.request.apiRequest;
         
-        // TODO: check cur_ind == 6 or whatever
+        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
+        const name = sessionAttributes.va_name;
+        const location = sessionAttributes.date_location;
+        const cur_ind = sessionAttributes.cur_ind; 
+        
+        if (cur_ind < 6) {
+            const unfinishedDateResult = speakAs(name, "Please stay, there's still more questions I have for you.")
+            // sessionAttributes.cur_ind = cur_ind-1;
+            // sessionAttributes.redo_ind = cur_ind-1;
+            handlerInput.attributesManager.setSessionAttributes(sessionAttributes);
+            const response = buildSuccessApiResponse(unfinishedDateResult);
+            console.log('Unfinished FinishDateAPIHandler Call', JSON.stringify(response));
+            return response;
+        }
         
         let finishDateResult = {};
         // TODO: Do some checking so you can't call goOnDate multiple times
-        const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-        const name = sessionAttributes.va_name;
         const datePoints = sessionAttributes.datePoints;
         //const seed = sessionAttributes.seed;
         //const cur_ind = sessionAttributes.cur_ind; 
         
         let outcome = "";
-        if (datePoints >= 180) { // Given 6 question + date location, highest score is 30*7=210, average score is 7*(30+20+20+10+10)/5=126
+        if (datePoints >= 170) { // Given 6 question + date location, highest score is 30*7=210, average score is 7*(30+20+20+10+10)/5=126
             outcome = data[name]["outcome"]["perfect"];
-        } else if (datePoints >= 150) {
+        } else if (datePoints >= 135) {
             outcome = data[name]["outcome"]["great"];
-        } else if (datePoints >= 110) {
+        } else if (datePoints >= 100) {
             outcome = data[name]["outcome"]["good"];
-        } else { // (datePoints < 110)
+        } else { // (datePoints < 100)
             outcome = data[name]["outcome"]["poor"];
         }
         
-        finishDateResult = speak(outcome + " Would you like to try again? You can pick the same or a different partner. ");
+        const date_end = data[name][location]["end"];
+        
+        finishDateResult = speakAs(name, date_end + outcome + " Would you like to try again? You can pick the same or a different partner. ");
         
         sessionAttributes.datePoints = 0;
         sessionAttributes.va_name = "";
@@ -192,7 +222,7 @@ const questionhandle = function(handlerInput, questionName) {
         // Check if the correct answer was given for the correct question 
         if (currentQuestion !== answeredQuestion) {
             console.log("Mismatch for question and answer ", currentQuestion, answeredQuestion);
-            questionResult = speak("I don't understand your answer. I'll ask again. " + ask(seed[cur_ind]));
+            questionResult = speakAs(name, "I don't understand your answer. I'll ask again. " + ask(seed[cur_ind]));
             const response = buildSuccessApiResponse(questionResult);
             return response;
         }
@@ -221,7 +251,11 @@ const questionhandle = function(handlerInput, questionName) {
         }
         
         
-        questionResult = speak(response + leadIn(name) + ask(seed[cur_ind+1]));
+        if (cur_ind >= 5) {
+            questionResult = speakAs(name, response + "<break time='1s' />It's getting late, shall we get going? Please say <break time='0.5s' /> let's end the date. ");
+        } else {
+            questionResult = speakAs(name, response + leadIn(name) + ask(seed[cur_ind+1]));
+        }
         
         sessionAttributes.datePoints += datePoints;
         sessionAttributes.prevAnswerPoints = datePoints;
@@ -251,7 +285,7 @@ const ChangeAnswerAPIHandler = { // TODO: perhaps add some sort of penalty for c
         const redo_ind = sessionAttributes.redo_ind;
         
         if (redo_ind < cur_ind-1) {
-            const reprompt = speak(redoLeadIn() + ask(seed[cur_ind-1])); // TODO: use different dialog when asking to redo question
+            const reprompt = speakAs(name, redoLeadIn() + ask(seed[cur_ind-1])); // TODO: use different dialog when asking to redo question
             
             sessionAttributes.datePoints -= sessionAttributes.prevAnswerPoints;
             sessionAttributes.prevAnswerPoints = 0;
@@ -268,7 +302,7 @@ const ChangeAnswerAPIHandler = { // TODO: perhaps add some sort of penalty for c
             let cur_ind = sessionAttributes.cur_ind;
             console.log("Attempt to change answer that cannot be changed ");
 
-            const reprompt = speak("You can't change your mind again! Next question, " + ask(seed[cur_ind])); // TODO: use more elegant dialog
+            const reprompt = speakAs(name, "You can't change your mind again! Next question, " + ask(seed[cur_ind])); // TODO: use more elegant dialog
         
             const response = buildSuccessApiResponse(reprompt);
             return response;

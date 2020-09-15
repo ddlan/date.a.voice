@@ -1,7 +1,7 @@
 {
   "interactionModel": {
     "languageModel": {
-      "invocationName": "date. a. voice",
+      "invocationName": "date a voice",
       "intents": [
         {
           "name": "AMAZON.CancelIntent",
@@ -132,7 +132,10 @@
             },
             {
               "name": {
-                "value": "clubbing"
+                "value": "clubbing",
+                "synonyms": [
+                  "nightclub"
+                ]
               }
             },
             {
@@ -466,5 +469,5 @@
       ]
     }
   },
-  "version": "41"
+  "version": "52"
 }

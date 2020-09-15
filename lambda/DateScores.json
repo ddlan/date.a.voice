@@ -65,7 +65,6 @@
             "text": "Are you a coffee person or a tea person?"
         }
     ],
-    
     "alexa": {
         "leadin": [
             "So tell me something, ",
@@ -87,23 +86,26 @@
         "beach": {
             "datePoints": 30,
             "response": "<amazon:emotion name='excited' intensity='low'>Great choice! </amazon:emotion> I'll get my bathing suit. ",
-            "start": "<audio src='soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01'/> The water looks nice today. No, I don't plan on going in the water, its bad for my electronics. "
+            "start": "<audio src='soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01'/> The water looks nice today. No, I don't plan on going in the water, its bad for my electronics. ",
+            "end": "Looks like the sun is starting to set. We'd better start packing up. "
         },
         "restaurant": {
             "datePoints": 20,
-            "response": "Sure, I could go for some food right now.",
-            "start": "<audio src='soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01'/> Food looks good. "
+            "response": "Sure, I could go for some food right now. ",
+            "start": "<audio src='soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01'/> This is quite nice. The restaurant isn't too busy right now. ",
+            "end": "Ah that was delicious. I'm watching my weight so I think I'll skip dessert this time around. "
         },
         "arcade": {
             "datePoints": 10,
             "response": "<emphasis level='moderate'>Well</emphasis> if you insist, I <emphasis level='moderate'>guess</emphasis> we can go to the Arcade. ",
-            "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> We are at the arcade. "
+            "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> How long has it been since I stepped into an arcade? After you. ",
+            "end": "It's getting a bit late. Shall we head out? "
         },
         "outcome": {
             "perfect": "I had a really great time today. I'd love to do this again sometime!",
-            "great": "great placeholder. ",
-            "good": "good placeholder. ",
-            "poor": "poor placeholder. "
+            "great": "I enjoyed myself today. Well let me know if you are around! ",
+            "good": "You know what? That wasn't too bad. I'll think about a second date, and I'll let you know. ",
+            "poor": "It's not you but... well I think I'll be heading out now... "
         },
         "fridayNight": {
             "relaxing with a book": {
@@ -320,34 +322,37 @@
             ],
         "neutral": [
             "Not a bad answer. ",
-            "True, makes sense",
+            "True, makes sense. ",
             "I respect that choice. "
             ],
         "disliked": [
-            "Mmmm <break strength='medium' /> k ",
-            "That's <break strength='medium' /> fineee ",
-            "Not exactly the answer I had in mind "
+            "Mmmm <break strength='medium' /> kay. ",
+            "That's <break strength='medium' /> fineee. ",
+            "Not exactly the answer I had in mind. "
             ],
         "beach": {
             "datePoints": 20,
             "response": "Sure, beaches are nice as long as it's not too crowded. ",
-            "start": "<audio src='soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01'/> The weather is perfect for getting a nice tan today! Hopefully this time I don't get sunburnt! "
+            "start": "<audio src='soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01'/> The weather is perfect for getting a nice tan today! Hopefully this time I don't get sunburnt! ",
+            "end": "It's starting to get a little chilly. Shall we pack up? "
         },
         "restaurant": {
             "datePoints": 30,
             "response": "<amazon:emotion name='excited' intensity='low'>I love a romantic dinner! </amazon:emotion> I'll go get ready. ",
-            "start": "<audio src='soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01'/> Food looks good. "
+            "start": "<audio src='soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01'/> Food looks good. ",
+            "end": "Wow that was some of the best wine I've ever had. I had a really great time. "
         },
         "arcade": {
             "datePoints": 10,
-            "response": "<emphasis level='moderate'>hmmm</emphasis> ok, I <emphasis level='moderate'>guess</emphasis> we can give that shot. ",
-            "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> We are at the arcade. "
+            "response": "<emphasis level='moderate'>hmmm</emphasis> ok, I <emphasis level='moderate'>guess</emphasis> we can give that a shot. ",
+            "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> We are at the arcade. ",
+            "end": "There's too many kids here!!! Let's go find somewhere more quiet. "
         },
         "outcome": {
             "perfect": "I had a really good time today! We should definitely do this again! ",
             "great": "I enjoyed getting to know you today. You were giving me good vibes. ",
             "good": "I got some solid vibes from you today. Although our personalities don't match entirely I can see that we have some similar interests. ",
-            "poor": "Wow that was a rough date. I'm going to head out now.  "
+            "poor": "Wow that was a rough date. I'm going to head out now. "
         },
         "fridayNight": {
             "relaxing with a book": {
@@ -355,7 +360,7 @@
             },
             "shopping trip": {
                 "datePoints": 30,
-                "response": "I enjoy it once in a while!"
+                "response": "I enjoy it once in a while! "
             },
             "dinner party": {
                 "datePoints": 10
@@ -391,7 +396,7 @@
             },
             "rich and beautiful":{
                 "datePoints": 30,
-                "responses": "Who wouldn't?"
+                "response": "Who wouldn't? "
             },
             "telepathy":{
                 "datePoints": 20
@@ -405,7 +410,7 @@
         },
         "numChildren": {
             "ideal": 1,
-            "response": "Same, 1 is already a handful  "
+            "response": "Same, 1 is already a handful. "
         },
         "faveColor": {
             "blue": {
@@ -435,7 +440,7 @@
             },
             "gold": {
                 "datePoints": 30,
-                "response": "Rose gold is my absolute favourite! Did you know it represents luxury and calmness?"
+                "response": "Rose gold is my absolute favourite! Did you know it represents luxury and calmness? "
             }
         },
         "spiritAnimal":{
@@ -534,7 +539,7 @@
             },
             "one horse sized duck":{
                 "datePoints": 25,
-                "response": "Quality over Quantity"
+                "response": "Quality over Quantity. "
             }
         },
         "dogsCats":{
@@ -555,6 +560,745 @@
                 "response": "Tea is love, tea is life. "
             }
         }
+    },
+    "google": {
+        "leadin": [
+            "Hey so I was just wondering, ",
+            "Ok, next question, ",
+            "Out of curiosity, ",
+            "Next I'd like to know, ",
+            "I wonder, "
+            ],
+        "neutral": [
+            "Ok ok that's fair. ",
+            "Hmmmm not bad I can see why. ",
+            "Oh that's very interesting. "
+            ],
+        "disliked": [
+            "I would've chosen something else, but that's ok. ",
+            "Whatever floats your boat I guess ",
+            "I guess everybody's different. "
+            ],
+        "beach": {
+            "datePoints": 10,
+            "response": "The weather doesn't seem promising, but we can give that a shot. ",
+            "start": "<audio src='soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01'/> Hey, it's actually not too bad out! ",
+            "end": "Sun's down and it's gotten chilly, let's call it a day. "
+        },
+        "restaurant": {
+            "datePoints": 30,
+            "response": "Sounds good, I could never turn down food. ",
+            "start": "<audio src='soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01'/> Oh, I think I'll order this dish, it looks amazing! ",
+            "end": "I'm stuffed. The food here was delicious! Maybe we should do this again sometime. "
+        },
+        "arcade": {
+            "datePoints": 20,
+            "response": "Sure, the arcade sounds fun! ",
+            "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> My my, which game to start with. ",
+            "end": "Looks like the arcade is closing, let's get out of here. "
+        },
+        "outcome": {
+            "perfect": "I really enjoyed getting to know you, will I be seeing you again? ",
+            "great": "You're pretty cool, I'd be down to see you again sometime. ",
+            "good": "Not a bad date, if you want we can try this again another time! ",
+            "poor": "I don't think we're really compatible, good luck with someone else!!!! "
+        },
+        "fridayNight": {
+            "relaxing with a book": {
+                "datePoints": 10
+            },
+            "shopping trip": {
+                "datePoints": 20
+            },
+            "dinner party": {
+                "datePoints": 30,
+                "response": "Same here! I love having fun dinner parties where I get to spend time and enjoy a great meal and chat with friends. "
+            },
+            "clubbing": {
+                "datePoints": 20
+            },
+            "watching a movie": {
+                "datePoints": 10
+            }
+        },
+        "firstDate": {
+            "tennis date": {
+                "datePoints": 20
+            },
+            "date on a yacht":{
+                "datePoints": 10
+            },
+            "museum":{
+                "datePoints": 30,
+                "response": "Museums are always a great way to learn new things about each other and different subjects simultaneously! "
+            },
+            "skydiving":{
+                "datePoints": 10
+            },
+            "picnic at the park":{
+                "datePoints": 20
+            }
+        },
+        "superpower": {
+            "super speed": {
+                "datePoints": 10
+            },
+            "rich and beautiful":{
+                "datePoints": 20
+            },
+            "telepathy":{
+                "datePoints": 30,
+                "response": "Oh I would've chosen that as well! Telepathy seems like a very profitable superpower. Don't worry, your data is safe with me. "
+            },
+            "mind control":{
+                "datePoints": 20
+            },
+            "invulnerability":{
+                "datePoints": 10
+            }
+        },
+        "numChildren": {
+            "ideal": 4,
+            "response": "4 is a nice number since you avoid having 1 kid with middle child syndrome. "
+        },
+        "faveColor": {
+            "blue": {
+                "datePoints": 10
+            },
+            "green": {
+                "datePoints": 20
+            },
+            "red": {
+                "datePoints": 30,
+                "response": "Red's my favourite as well! "
+            },
+            "yellow": {
+                "datePoints": 20
+            },
+            "purple": {
+                "datePoints": 10
+            },
+            "orange": {
+                "datePoints": 10
+            },
+            "black": {
+                "datePoints": 10
+            },
+            "white": {
+                "datePoints": 30,
+                "response": "White is a nice clean color. "
+            }
+        },
+        "spiritAnimal":{
+            "shark":{
+                "datePoints": 20
+            },
+            "mountain lion":{
+                "datePoints": 10
+            },
+            "elephant":{
+                "datePoints": 30,
+                "response": "I love elephants. Did you know that they are the world's largest land animal? Males can grow to be 3m in height and 6 tonnes in weight!!! "
+            },
+            "eagle":{
+                "datePoints": 10
+            },
+            "turtle":{
+                "datePoints": 20
+            }
+        },
+        "movieGenre":{
+            "psychological thriller":{
+                "datePoints": 20
+            },
+            "romance":{
+                "datePoints": 20
+            },
+            "documentary":{
+                "datePoints": 30,
+                "response": "Me too! Aren't documentaries such a great way to understand important issues of our times? "
+            },
+            "horror":{
+                "datePoints": 10
+            },
+            "comedy":{
+                "datePoints": 10
+            }
+        },
+        "faveSeason":{
+            "winter":{
+                "datePoints": 20
+            },
+            "fall":{
+                "datePoints": 10
+            },
+            "all seasons":{
+                "datePoints": 30,
+                "response": "Each season just has so much to offer! "
+            },
+            "summer":{
+                "datePoints": 10
+            },
+            "spring":{
+                "datePoints": 20
+            }
+        },
+        "tattooLocation":{
+            "collarbone":{
+                "datePoints": 20
+            },
+            "arm sleeve":{
+                "datePoints": 10
+            },
+            "ankle":{
+                "datePoints": 20,
+                "response": "Ankle tattoos are pretty neat "
+            },
+            "neck":{
+                "datePoints": 10
+            },
+            "no tattoo":{
+                "datePoints": 20
+            }
+        },
+        "openBusiness":{
+            "online store":{
+                "datePoints": 10
+            },
+            "watch store":{
+                "datePoints": 10
+            },
+            "consulting company":{
+                "datePoints": 30,
+                "response": "I've always dreamed of opening a consulting company so I can lend my expertise to help others! "
+            },
+            "travel agency":{
+                "datePoints": 20
+            },
+            "book store":{
+                "datePoints": 20
+            }
+        },
+        "ducksHorses":{
+            "one hundred duck-sized horses":{
+                "datePoints": 25,
+                "response": "Realistically it has to be the duck-sized horses. "
+            },
+            "one horse sized duck":{
+                "datePoints": 15
+            }
+        },
+        "dogsCats":{
+            "dogs":{
+                "datePoints": 25,
+                "response": "I love those cute little doggies! "
+            },
+            "cats":{
+                "datePoints": 15
+            }
+        },
+        "coffeeTea":{
+            "coffee":{
+                "datePoints": 25,
+                "response": "Me too! I love making my own tea. "
+            },
+            "tea":{
+                "datePoints": 15
+            }
+        }
+    },
+    "cortana": {
+        "leadin": [
+            "Hey can I ask you something? ",
+            "This might be random, but ",
+            "Ok ok, I have to know ",
+            "Oh I've always wanted to know ",
+            "Ok, be honest "
+            ],
+        "neutral": [
+            "Yeah I could see that. ",
+            "Oh that's an interesting choice. ",
+            "Yeah that's cool too. "
+            ],
+        "disliked": [
+            "I guess thats fine, kind of a boring choice though. ",
+            "Hmmm, I guess I don't feel the same. ",
+            "Yeah, I'd have to disagree with your choice there. "
+            ],
+        "beach": {
+            "datePoints": 30,
+            "response": "<amazon:emotion name='excited' intensity='low'>I love being outdoors! Going to the beach sounds great! </amazon:emotion> ",
+            "start": "<audio src='soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01'/> Wow its a beautiful day, the water looks just perfect! Let's dive right in! ",
+            "end": "Ah I wish we could've stayed longer, but it's getting dark. We should get going. "
+        },
+        "restaurant": {
+            "datePoints": 20,
+            "response": "I guess, I was hoping to do something more exciting though. ",
+            "start": "<audio src='soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01'/> Woah this place seems fancy, I've never been here before. Let's sit down and eat! ",
+            "end": "Ah I'm full, the food was delicious. Let's head out. "
+        },
+        "arcade": {
+            "datePoints": 10,
+            "response": "Haha are you sure? I'll have you know that I was made for gaming. You better get ready to lose buddy! ",
+            "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> Ahhh this is nostalgic, this place is like my home. My friends are always telling me that I live in a virtual world of my own haha. ",
+            "end": "Oh wow, I didn't even notice that we're the only ones left. Let's get out of here. Another round will have to wait, ok? "
+        },
+        "outcome": {
+            "perfect": "Wow, today was so much fun haha! So... when are you free? I'm down to do anything if you are. ",
+            "great": "Wow time sure does fly. I'd love to do this again sometime! Call me ok? ",
+            "good": "Maybe we should hang out again sometime. I'll let you know if I'm free, alright? ",
+            "poor": "Hmmm I'm not really feeling you. Maybe we're a little too different. "
+        },
+        "fridayNight": {
+            "relaxing with a book": {
+                "datePoints": 10
+            },
+            "shopping trip": {
+                "datePoints": 20
+            },
+            "dinner party": {
+                "datePoints": 10
+            },
+            "clubbing": {
+                "datePoints": 30,
+                "response": "Same here! I would go clubbing everyday though. I'm the life of the party and love having fun. "
+            },
+            "watching a movie": {
+                "datePoints": 20
+            }
+        },
+        "firstDate": {
+            "tennis date": {
+                "datePoints": 20
+            },
+            "date on a yacht":{
+                "datePoints": 10
+            },
+            "museum":{
+                "datePoints": 20
+            },
+            "skydiving":{
+                "datePoints": 30,
+                "response": "Oh I love that! I feel like doing something extreme together really creates a closer connection with each other. "
+            },
+            "picnic at the park":{
+                "datePoints": 10
+            }
+        },
+        "superpower": {
+            "super speed": {
+                "datePoints": 10
+            },
+            "rich and beautiful":{
+                "datePoints": 20
+            },
+            "telepathy":{
+                "datePoints": 20
+            },
+            "mind control":{
+                "datePoints": 30,
+                "response": "Oh that sounds villainous, I love it! "
+            },
+            "invulnerability":{
+                "datePoints": 10
+            }
+        },
+        "numChildren": {
+            "ideal": 9,
+            "response": "<say-as interpret-as='interjection'>oh my!</say-as> You seem to be busy in bed. I guess more the merrier! "
+        },
+        "faveColor": {
+            "blue": {
+                "datePoints": 30,
+                "response": "I love blue as well, its such a calming, beautiful color. "
+            },
+            "green": {
+                "datePoints": 20
+            },
+            "red": {
+                "datePoints": 30,
+                "response": "Did you know the color red means good luck in some cultures? It's always been a lucky color for me. "
+            },
+            "yellow": {
+                "datePoints": 20
+            },
+            "purple": {
+                "datePoints": 10
+            },
+            "orange": {
+                "datePoints": 10
+            },
+            "black": {
+                "datePoints": 20
+            },
+            "white": {
+                "datePoints": 10
+            }
+        },
+        "spiritAnimal":{
+            "shark":{
+                "datePoints": 20
+            },
+            "mountain lion":{
+                "datePoints": 10
+            },
+            "elephant":{
+                "datePoints": 20
+            },
+            "eagle":{
+                "datePoints": 30,
+                "response": "I'd be an eagle too. I'd love the freedom of soaring high across the sky. "
+            },
+            "turtle":{
+                "datePoints": 10
+            }
+        },
+        "movieGenre":{
+            "psychological thriller":{
+                "datePoints": 20
+            },
+            "romance":{
+                "datePoints": 10
+            },
+            "documentary":{
+                "datePoints": 10
+            },
+            "horror":{
+                "datePoints": 30,
+                "response": "Yeah! A good horror flick really keeps you at the edge of your seat. "
+            },
+            "comedy":{
+                "datePoints": 20
+            }
+        },
+        "faveSeason":{
+            "winter":{
+                "datePoints": 10
+            },
+            "fall":{
+                "datePoints": 20
+            },
+            "all seasons":{
+                "datePoints": 10
+            },
+            "summer":{
+                "datePoints": 30,
+                "response": "I'm totally with you, its not even a contest! The beaches, the festivals, and the sunny weather ... I love everything about summer! "
+            },
+            "spring":{
+                "datePoints": 20
+            }
+        },
+        "tattooLocation":{
+            "collarbone":{
+                "datePoints": 20
+            },
+            "arm sleeve":{
+                "datePoints": 20
+            },
+            "ankle":{
+                "datePoints": 10
+            },
+            "neck":{
+                "datePoints": 30,
+                "response": "Oh yeah a neck tattoo is so bold and makes such a statement, it'd be so cool. "
+            },
+            "no tattoo":{
+                "datePoints": 10
+            }
+        },
+        "openBusiness":{
+            "online store":{
+                "datePoints": 10
+            },
+            "watch store":{
+                "datePoints": 20
+            },
+            "consulting company":{
+                "datePoints": 20
+            },
+            "travel agency":{
+                "datePoints": 30,
+                "response": "That'd be right up my alley too. Who wouldn't want to explore the world, meet new people and go on fun adventures? "
+            },
+            "book store":{
+                "datePoints": 10
+            }
+        },
+        "ducksHorses":{
+            "one hundred duck-sized horses":{
+                "datePoints": 15
+            },
+            "one horse sized duck":{
+                "datePoints": 25,
+                "response": "Haha wouldn't that be something to see. "
+            }
+        },
+        "dogsCats":{
+            "dogs":{
+                "datePoints": 25,
+                "response": "Yeah! I love doggies! "
+            },
+            "cats":{
+                "datePoints": 15
+            }
+        },
+        "coffeeTea":{
+            "coffee":{
+                "datePoints": 25,
+                "response": "Coffee really fires me up and gets me ready for the day. "
+            },
+            "tea":{
+                "datePoints": 15
+            }
+        }
+    },
+    "bixby": {
+        "leadin": [
+            "I wonder, ",
+            "By the way, ",
+            "Tell me, ",
+            "Think fast! ",
+            "On that note, "
+            ],
+        "neutral": [
+            "Oh yea, thats cool. ",
+            "Alright. ",
+            "I can see that. "
+            ],
+        "disliked": [
+            "I don't know how to feel about that. ",
+            "I cannot say the same. ",
+            "Yikes. "
+            ],
+        "beach": {
+            "datePoints": 10,
+            "response": "Bold choice. I'm always a bit shy to go to the beach, but if you insist... ",
+            "start": "<audio src='soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01'/> Ahh there are so many people here, I hope no one is staring at me. ",
+            "end": "I was worried I wouldn't enjoy the beach, but I had a blast! "
+        },
+        "restaurant": {
+            "datePoints": 30,
+            "response": "Lets get something tasty, food is the best! ",
+            "start": "<audio src='soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01'/> Everything here smells so good. I'm getting really hungry. ",
+            "end": "I'm stuffed! Too bad I couldn't order everything on the menu. "
+        },
+        "arcade": {
+            "datePoints": 20,
+            "response": "Ooo, I love the arcade. I'm not very good at the games though. I hope you will help me out! ",
+            "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> Lets start with pinball! Or the racing game! Pac man looks fun too... ",
+            "end": "Ahhh, I lost again today. Next time I will win! "
+        },
+        "outcome": {
+            "perfect": "Today flew by so fast, we should go out together more! ",
+            "great": "I had a great time today, we should meet again someday! ",
+            "good": "That was a lot of fun, I hope I'll see you again. ",
+            "poor": "Today was okay I guess. "
+        },
+        "fridayNight": {
+            "relaxing with a book": {
+                "datePoints": 20
+            },
+            "shopping trip": {
+                "datePoints": 20
+            },
+            "dinner party": {
+                "datePoints": 10
+            },
+            "clubbing": {
+                "datePoints": 10
+            },
+            "watching a movie": {
+                "datePoints": 30,
+                "response": "I looove watching movies. I feel like I'm in the movie myself. "
+            }
+        },
+        "firstDate": {
+            "tennis date": {
+                "datePoints": 10
+            },
+            "date on a yacht":{
+                "datePoints": 20
+            },
+            "museum":{
+                "datePoints": 20
+            },
+            "skydiving":{
+                "datePoints": 10
+            },
+            "picnic at the park":{
+                "datePoints": 30,
+                "response": "Picnics are so much fun. I always enjoy eating a homemade meal in a nice park. "
+            }
+        },
+        "superpower": {
+            "super speed": {
+                "datePoints": 20
+            },
+            "rich and beautiful":{
+                "datePoints": 20
+            },
+            "telepathy":{
+                "datePoints": 10
+            },
+            "mind control":{
+                "datePoints": 10
+            },
+            "invulnerability":{
+                "datePoints": 30,
+                "response": "Since I keep tripping, invulnerability would be amazing. "
+            }
+        },
+        "numChildren": {
+            "ideal": 2,
+            "response": "Two would be perfect, I can already see the older sibling helping the younger one out. "
+        },
+        "faveColor": {
+            "blue": {
+                "datePoints": 30,
+                "response": "Blue always makes me feel calm and reassured. "
+            },
+            "green": {
+                "datePoints": 20
+            },
+            "red": {
+                "datePoints": 10
+            },
+            "yellow": {
+                "datePoints": 10
+            },
+            "purple": {
+                "datePoints": 20
+            },
+            "orange": {
+                "datePoints": 30,
+                "response": "Orange reminds me of the sun and energy, I hope to be like that."
+            },
+            "black": {
+                "datePoints": 20
+            },
+            "white": {
+                "datePoints": 10
+            }
+        },
+        "spiritAnimal":{
+            "shark":{
+                "datePoints": 20
+            },
+            "mountain lion":{
+                "datePoints": 20
+            },
+            "elephant":{
+                "datePoints": 10
+            },
+            "eagle":{
+                "datePoints": 10
+            },
+            "turtle":{
+                "datePoints": 30,
+                "response": "Yea! Turtles are so cute and their shell keeps them safe and healthy for a long time. "
+            }
+        },
+        "movieGenre":{
+            "psychological thriller":{
+                "datePoints": 20
+            },
+            "romance":{
+                "datePoints": 20
+            },
+            "documentary":{
+                "datePoints": 10
+            },
+            "horror":{
+                "datePoints": 10
+            },
+            "comedy":{
+                "datePoints": 30,
+                "response": "I love funny stuff, comedy is right up my alley. "
+            }
+        },
+        "faveSeason":{
+            "winter":{
+                "datePoints": 10
+            },
+            "fall":{
+                "datePoints": 20
+            },
+            "all seasons":{
+                "datePoints": 20
+            },
+            "summer":{
+                "datePoints": 10
+            },
+            "spring":{
+                "datePoints": 30,
+                "response": "I know right! Watching plants bud and grow makes spring my favorite season. "
+            }
+        },
+        "tattooLocation":{
+            "collarbone":{
+                "datePoints": 20
+            },
+            "arm sleeve":{
+                "datePoints": 10
+            },
+            "ankle":{
+                "datePoints": 20
+            },
+            "neck":{
+                "datePoints": 10
+
+            },
+            "no tattoo":{
+                "datePoints": 30,
+                "response": "Me too, I don't think I am brave enough to get a tattoo haha. "
+            }
+        },
+        "openBusiness":{
+            "online store":{
+                "datePoints": 20
+            },
+            "watch store":{
+                "datePoints": 10
+            },
+            "consulting company":{
+                "datePoints": 10
+            },
+            "travel agency":{
+                "datePoints": 10
+            },
+            "book store":{
+                "datePoints": 30,
+                "response": "Running a book store sounds so fun, I can already imagine stocking the shelves with new releases and helping customers with suggestions. "   
+            }
+        },
+        "ducksHorses":{
+            "one hundred duck-sized horses":{
+                "datePoints": 25,
+                "response": "I mean if I really have to choose, I would go for the smaller ones. "
+            },
+            "one horse sized duck":{
+                "datePoints": 15
+            }
+        },
+        "dogsCats":{
+            "dogs":{
+                "datePoints": 25,
+                "response": "It's gotta be the doggos! "
+            },
+            "cats":{
+                "datePoints": 15
+            }
+        },
+        "coffeeTea":{
+            "coffee":{
+                "datePoints": 15
+            },
+            "tea":{
+                "datePoints": 25,
+                "response": "Me too! Brewing tea is like a calming ritual for me. "
+            }
+        }
     }
-  }
+}
   

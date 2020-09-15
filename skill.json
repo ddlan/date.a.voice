@@ -5,9 +5,7 @@
         "en-US": {
           "summary": "Date.A.Voice presents the first ever \"voice assistant\" dating simulator. It\u0027s the perfect time to practice your dating skills and try wooing a virtual partner!",
           "examplePhrases": [
-            "Alexa open date a voice",
-            "I want to go on a date with Siri to the restaurant",
-            "My ideal friday night is going on a shopping trip"
+            "Alexa open date a voice"
           ],
           "keywords": [
             "Dating",
@@ -30,7 +28,7 @@
         "isActive": false
       },
       "isAvailableWorldwide": true,
-      "testingInstructions": "Generally you can follow the audio prompts. Example dialogue:\nUser: \"I want to go on a date with Alexa\"\nAlexa: \"Cool ... Where would you like to go, the beach, the restaurant or the arcade?\"\nUser: \"The beach\"\nAlexa: \"Great! ... Tell me something, what\u0027s your favourite color\"\nUser: \"My favourite color is blue\"\nAlexa: \"Me too! What\u0027s your favourite season?\"\n...\nAlexa: \"It\u0027s getting late, shall we get going? Say \u0027let\u0027s finish the date\u0027\"\nUser: \"Let\u0027s finish the date\"\nAlexa: \"I had an amazing time! Let\u0027s do this again!\"",
+      "testingInstructions": "Generally you can follow the audio prompts. Example dialogue:\nUser: \"I want to go on a date with Alexa\"\nAlexa: \"You\u0027d like to know about me? I would describe myself as ... Would you like to go on a date with me?\"\nUser: \"Yes.\"\nAlexa: \"Cool ... Where would you like to go, the beach, the restaurant or the arcade?\"\nUser: \"The beach\"\nAlexa: \"Great! ... Tell me something, what\u0027s your favourite color\"\nUser: \"My favourite color is blue\"\nAlexa: \"Me too! What\u0027s your favourite season?\"\n...\nAlexa: \"It\u0027s getting late, shall we get going? Say \u0027let\u0027s finish the date\u0027\"\nUser: \"Let\u0027s finish the date\"\nAlexa: \"I had an amazing time! Let\u0027s do this again!\"",
       "category": "NOVELTY_\u0026_HUMOR_GAMES",
       "distributionCountries": []
     },
