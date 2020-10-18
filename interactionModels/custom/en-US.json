@@ -9,7 +9,10 @@
         },
         {
           "name": "AMAZON.HelpIntent",
-          "samples": []
+          "samples": [
+            "help me",
+            "help"
+          ]
         },
         {
           "name": "AMAZON.StopIntent",
@@ -33,21 +36,44 @@
           "samples": []
         },
         {
-          "name": "GetDateStatusIntent",
-          "slots": [],
-          "samples": [
-            "status"
-          ]
+          "name": "AMAZON.MoreIntent",
+          "samples": []
         },
         {
-          "name": "StartDatingSimIntent",
-          "slots": [],
-          "samples": [
-            "start the dating sim",
-            "start dating sim",
-            "start the dating simulator",
-            "start dating simulator"
-          ]
+          "name": "AMAZON.NavigateSettingsIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.NextIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PageUpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PageDownIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.PreviousIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollRightIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollDownIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollLeftIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.ScrollUpIntent",
+          "samples": []
         }
       ],
       "types": [
@@ -83,7 +109,7 @@
             {
               "id": "0",
               "name": {
-                "value": "alexa"
+                "value": "lexi"
               }
             }
           ],
@@ -465,9 +491,38 @@
             }
           ],
           "name": "animal"
+        },
+        {
+          "values": [
+            {
+              "name": {
+                "value": "female",
+                "synonyms": [
+                  "feminine",
+                  "her",
+                  "she",
+                  "woman",
+                  "girl"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "male",
+                "synonyms": [
+                  "masculine",
+                  "him",
+                  "he",
+                  "man",
+                  "boy"
+                ]
+              }
+            }
+          ],
+          "name": "date_gender"
         }
       ]
     }
   },
-  "version": "52"
+  "version": "79"
 }

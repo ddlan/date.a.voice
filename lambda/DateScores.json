@@ -3,6 +3,8 @@
     "_comment2": "For simplicity's sake, let's make ideal = 30, neutral = 20, disliked = 10 points.",
     "_comment3": "For two option questions, e.g. dogs vs cats, ideal is 25 and disliked is 15",
     "_comment4": "Then we can do a check, if 30 points, use ideal response, otherwise, use neutral/disliked",
+
+    "goOnDateQuestion": "Who would you like to go on a date with? You can pick Lexi, Siri, Google, Cortana, or Bixby.",
     
     "redoLeadin": [
         "Changed your mind? ",
@@ -14,58 +16,98 @@
     "questions": [
         {
             "name": "fridayNight",
+            "shortText": "Friday night plans?",
             "text": "What would you say is your ideal Friday night, relaxing with a book, going on a shopping trip, going to a dinner party, going to a nightclub, or watching a movie?"
         },
         {
             "name": "firstDate",
+            "shortText": "Ideal first date?",
             "text": "What would you say is your ideal first date, a tennis date, date on a yacht, the museum, skydiving, or picnic at the park?"
         },
         {
             "name": "superpower",
+            "shortText": "What superpower?",
             "text": "If you could have a superpower, would you choose telepathy, invulnerability, being rich and beautiful, super speed, or mind control?"
         },
         {
             "name": "numChildren",
+            "shortText": "Number of children?",
             "text": "What do you think is the perfect number of children to have?"
         },
         {
             "name": "faveColor",
+            "shortText": "Your favorite color?",
             "text": "Cheesy question I know, but what's your favourite color?"
         },
         {
             "name": "spiritAnimal",
+            "shortText": "Your spirit animal?",
             "text": "What's your spirit animal, a shark, an elephant, a turtle, a mountain lion, or an eagle?"
         },
         {
             "name": "movieGenre",
+            "shortText": "Fave movie genre?",
             "text": "What's your favourite movie genre, romance, horror, psychological thriller, documentary, or comedy? "
         },
         {
             "name": "faveSeason",
+            "shortText": "Favorite season?",
             "text": "What's your favourite season? Or is it all of them?"
         },
         {
             "name": "tattooLocation",
+            "shortText": "Tattoo location?",
             "text": "Would you get a tattoo, and if so, where? On your neck, ankle, collarbone, or as an arm sleeve?"
         },
         {
             "name": "openBusiness",
+            "shortText": "Open a business?",
             "text": "If you had the choice, what kind of business would you open? A book store, watch store, consulting company, online store, or travel agency?"
         },
         {
             "name": "ducksHorses",
+            "shortText": "Ducks or horses?",
             "text": "Crazy question I know. Would you rather fight one horse sized duck, or one hundred duck sized horses? Work with me here."
         },
         {
             "name": "dogsCats",
+            "shortText": "Tell me, dogs or cats?",
             "text": "Okay. Dogs or Cats?"
         },
         {
             "name": "coffeeTea",
+            "shortText": "So, coffee or tea?",
             "text": "Are you a coffee person or a tea person?"
         }
     ],
-    "alexa": {
+    "audio": {
+        "beach": "soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01",
+        "restaurant": "soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01",
+        "arcade": "soundbank://soundlibrary/video_tunes/video_tunes_02"
+    },
+    "visual": {
+        "lexi": {
+            "textbox_color": "#52b7e9dd",
+            "textbox_border_color": "#2e5984"
+        },
+        "siri": {
+            "textbox_color": "#ffe5e4dd",
+            "textbox_border_color": "#ffcf40"
+        },
+        "google": {
+            "textbox_color": "#f8babadd",
+            "textbox_border_color": "#f83e3e"
+        },
+        "cortana": {
+            "textbox_color": "#95cdf0dd",
+            "textbox_border_color": "#4c93ce"
+        },
+        "bixby": {
+            "textbox_color": "#ffaf7add",
+            "textbox_border_color": "#ff781f"
+        }
+    },
+    "lexi": {
         "leadin": [
             "So tell me something, ",
             "I was wondering, ",
@@ -79,33 +121,33 @@
             "That's an interesting option. "
             ],
         "disliked": [
-            "Really? Well if that's how you feel... ",
-            "Mmmm, to each their own. ",
-            "Oh <break strength='medium' /> anyways. "
+            "<prosody pitch='high'> Really? </prosody> <break strength='medium' /> <prosody pitch='low'> Well if that's how you feel </prosody>",
+            "<prosody pitch='high'> hmmm </prosody>, to each their own. ",
+            "<prosody pitch='high'> Oh </prosody> <break strength='medium' /> anyways. "
             ],
         "beach": {
             "datePoints": 30,
             "response": "<amazon:emotion name='excited' intensity='low'>Great choice! </amazon:emotion> I'll get my bathing suit. ",
-            "start": "<audio src='soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01'/> The water looks nice today. No, I don't plan on going in the water, its bad for my electronics. ",
+            "start": "The water looks nice today. No, I don't plan on going in the water, its bad for my electronics. ",
             "end": "Looks like the sun is starting to set. We'd better start packing up. "
         },
         "restaurant": {
             "datePoints": 20,
             "response": "Sure, I could go for some food right now. ",
-            "start": "<audio src='soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01'/> This is quite nice. The restaurant isn't too busy right now. ",
+            "start": "This is quite nice. The restaurant isn't too busy right now. ",
             "end": "Ah that was delicious. I'm watching my weight so I think I'll skip dessert this time around. "
         },
         "arcade": {
             "datePoints": 10,
             "response": "<emphasis level='moderate'>Well</emphasis> if you insist, I <emphasis level='moderate'>guess</emphasis> we can go to the Arcade. ",
-            "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> How long has it been since I stepped into an arcade? After you. ",
+            "start": "How long has it been since I stepped into an arcade? After you. ",
             "end": "It's getting a bit late. Shall we head out? "
         },
         "outcome": {
             "perfect": "I had a really great time today. I'd love to do this again sometime!",
             "great": "I enjoyed myself today. Well let me know if you are around! ",
             "good": "You know what? That wasn't too bad. I'll think about a second date, and I'll let you know. ",
-            "poor": "It's not you but... well I think I'll be heading out now... "
+            "poor": "It's not you <emphasis level='strong'>but</emphasis> well I think I'll be heading out now... "
         },
         "fridayNight": {
             "relaxing with a book": {
@@ -128,7 +170,16 @@
         "firstDate": {
             "tennis date": {
                 "datePoints": 30,
-                "response": "Haha did you know? I used to be quite the serious tennis player. "
+                "response": [
+                    {   
+                        "type": "Audio",
+                        "content": "soundbank://soundlibrary/voices/human/human_12"
+                    },
+                    {   
+                        "type": "Speech",
+                        "content": " Did you know? I used to be quite the serious tennis player. "
+                    }
+                ]
             },
             "date on a yacht":{
                 "datePoints": 20
@@ -146,7 +197,7 @@
         "superpower": {
             "super speed": {
                 "datePoints": 30,
-                "response": "Yes! Think of all I could get done if I had super speed. "
+                "response": "<<emphasis level='strong'>Yes</emphasis> Think of all I could get done if I had super speed. "
             },
             "rich and beautiful":{
                 "datePoints": 10
@@ -326,26 +377,26 @@
             "I respect that choice. "
             ],
         "disliked": [
-            "Mmmm <break strength='medium' /> kay. ",
-            "That's <break strength='medium' /> fineee. ",
+            "Hmmm <break strength='medium' /> okay. ",
+            "That's <break strength='medium' /> fine. ",
             "Not exactly the answer I had in mind. "
             ],
         "beach": {
             "datePoints": 20,
             "response": "Sure, beaches are nice as long as it's not too crowded. ",
-            "start": "<audio src='soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01'/> The weather is perfect for getting a nice tan today! Hopefully this time I don't get sunburnt! ",
+            "start": "The weather is perfect for getting a nice tan today! Hopefully this time I don't get sunburnt! ",
             "end": "It's starting to get a little chilly. Shall we pack up? "
         },
         "restaurant": {
             "datePoints": 30,
             "response": "<amazon:emotion name='excited' intensity='low'>I love a romantic dinner! </amazon:emotion> I'll go get ready. ",
-            "start": "<audio src='soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01'/> Food looks good. ",
+            "start": "Food looks good. ",
             "end": "Wow that was some of the best wine I've ever had. I had a really great time. "
         },
         "arcade": {
             "datePoints": 10,
             "response": "<emphasis level='moderate'>hmmm</emphasis> ok, I <emphasis level='moderate'>guess</emphasis> we can give that a shot. ",
-            "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> We are at the arcade. ",
+            "start": "We are at the arcade. ",
             "end": "There's too many kids here!!! Let's go find somewhere more quiet. "
         },
         "outcome": {
@@ -410,7 +461,7 @@
         },
         "numChildren": {
             "ideal": 1,
-            "response": "Same, 1 is already a handful. "
+            "response": "Same, <break strength='medium' /> 1 is already a handful. "
         },
         "faveColor": {
             "blue": {
@@ -449,7 +500,7 @@
             },
             "mountain lion":{
                 "datePoints": 30,
-                "response": "Yassss Mountain lions are such majestic creatures that show leadership, grace and power! I embody a lot of these traits. "
+                "response": "Me too! Mountain lions are such majestic creatures that show leadership, grace and power! In fact I embody a lot of these traits. "
             },
             "elephant":{
                 "datePoints": 10
@@ -476,7 +527,7 @@
                 "datePoints": 20
             },
             "comedy":{
-                "datePoints": 30
+                "datePoints": 20
             }
         },
         "faveSeason":{
@@ -521,7 +572,7 @@
             },
             "watch store":{
                 "datePoints": 30,
-                "respone": "Watches are functional, convinient and the perfect piece to any outfit. "
+                "respone": "Watches are functional, convenient and the perfect piece to any outfit. "
             },
             "consulting company":{
                 "datePoints": 20
@@ -582,19 +633,19 @@
         "beach": {
             "datePoints": 10,
             "response": "The weather doesn't seem promising, but we can give that a shot. ",
-            "start": "<audio src='soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01'/> Hey, it's actually not too bad out! ",
+            "start": "Hey, it's actually not too bad out! ",
             "end": "Sun's down and it's gotten chilly, let's call it a day. "
         },
         "restaurant": {
             "datePoints": 30,
             "response": "Sounds good, I could never turn down food. ",
-            "start": "<audio src='soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01'/> Oh, I think I'll order this dish, it looks amazing! ",
+            "start": "Oh, I think I'll order this dish, it looks amazing! ",
             "end": "I'm stuffed. The food here was delicious! Maybe we should do this again sometime. "
         },
         "arcade": {
             "datePoints": 20,
             "response": "Sure, the arcade sounds fun! ",
-            "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> My my, which game to start with. ",
+            "start": "My my, which game to start with. ",
             "end": "Looks like the arcade is closing, let's get out of here. "
         },
         "outcome": {
@@ -826,25 +877,34 @@
             "Yeah, I'd have to disagree with your choice there. "
             ],
         "beach": {
-            "datePoints": 30,
+            "datePoints": 20,
             "response": "<amazon:emotion name='excited' intensity='low'>I love being outdoors! Going to the beach sounds great! </amazon:emotion> ",
-            "start": "<audio src='soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01'/> Wow its a beautiful day, the water looks just perfect! Let's dive right in! ",
+            "start": "Wow its a beautiful day, the water looks just perfect! Let's dive right in! ",
             "end": "Ah I wish we could've stayed longer, but it's getting dark. We should get going. "
         },
         "restaurant": {
-            "datePoints": 20,
+            "datePoints": 10,
             "response": "I guess, I was hoping to do something more exciting though. ",
-            "start": "<audio src='soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01'/> Woah this place seems fancy, I've never been here before. Let's sit down and eat! ",
+            "start": "Woah this place seems fancy, I've never been here before. Let's sit down and eat! ",
             "end": "Ah I'm full, the food was delicious. Let's head out. "
         },
         "arcade": {
-            "datePoints": 10,
-            "response": "Haha are you sure? I'll have you know that I was made for gaming. You better get ready to lose buddy! ",
-            "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> Ahhh this is nostalgic, this place is like my home. My friends are always telling me that I live in a virtual world of my own haha. ",
+            "datePoints": 30,
+            "response": [
+                {   
+                    "type": "Audio",
+                    "content": "soundbank://soundlibrary/voices/human/human_12"
+                },
+                {   
+                    "type": "Speech",
+                    "content": " Are you sure? I'll have you know that I was made for gaming. You better get ready to lose buddy! "
+                }
+            ],
+            "start": "Ahhh this is nostalgic, this place is like my home. My friends are always telling me that I live in a virtual world of my own, haha. ",
             "end": "Oh wow, I didn't even notice that we're the only ones left. Let's get out of here. Another round will have to wait, ok? "
         },
         "outcome": {
-            "perfect": "Wow, today was so much fun haha! So... when are you free? I'm down to do anything if you are. ",
+            "perfect": "Wow, today was so much fun haha! So <break strength='medium' /> when are you free? I'm down to do anything if you are. ",
             "great": "Wow time sure does fly. I'd love to do this again sometime! Call me ok? ",
             "good": "Maybe we should hang out again sometime. I'll let you know if I'm free, alright? ",
             "poor": "Hmmm I'm not really feeling you. Maybe we're a little too different. "
@@ -1031,7 +1091,16 @@
             },
             "one horse sized duck":{
                 "datePoints": 25,
-                "response": "Haha wouldn't that be something to see. "
+                "response": [
+                    {   
+                        "type": "Audio",
+                        "content": "soundbank://soundlibrary/voices/human/human_12"
+                    },
+                    {   
+                        "type": "Speech",
+                        "content": "Wouldn't that be something to see. "
+                    }
+                ]
             }
         },
         "dogsCats":{
@@ -1074,19 +1143,19 @@
         "beach": {
             "datePoints": 10,
             "response": "Bold choice. I'm always a bit shy to go to the beach, but if you insist... ",
-            "start": "<audio src='soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01'/> Ahh there are so many people here, I hope no one is staring at me. ",
+            "start": "Ahh there are so many people here, I hope no one is staring at me. ",
             "end": "I was worried I wouldn't enjoy the beach, but I had a blast! "
         },
         "restaurant": {
             "datePoints": 30,
             "response": "Lets get something tasty, food is the best! ",
-            "start": "<audio src='soundbank://soundlibrary/foley/amzn_sfx_restaurant_ambience_01'/> Everything here smells so good. I'm getting really hungry. ",
+            "start": "Everything here smells so good. I'm getting really hungry. ",
             "end": "I'm stuffed! Too bad I couldn't order everything on the menu. "
         },
         "arcade": {
             "datePoints": 20,
             "response": "Ooo, I love the arcade. I'm not very good at the games though. I hope you will help me out! ",
-            "start": "<audio src='soundbank://soundlibrary/video_tunes/video_tunes_02'/> Lets start with pinball! Or the racing game! Pac man looks fun too... ",
+            "start": "Lets start with pinball! Or the racing game! Pac man looks fun too... ",
             "end": "Ahhh, I lost again today. Next time I will win! "
         },
         "outcome": {
@@ -1110,7 +1179,7 @@
             },
             "watching a movie": {
                 "datePoints": 30,
-                "response": "I looove watching movies. I feel like I'm in the movie myself. "
+                "response": "I love watching movies. I feel like I'm in the movie myself. "
             }
         },
         "firstDate": {

@@ -1,1 +1,1 @@
-{}
+{"ssml_speech":{"apla":[{"type":"Speech","contentType":"SSML","content":"<speak> Sure, I'm down for the beach </speak>"},{"type":"Mixer","items":[{"type":"Speech","contentType":"SSML","content":"<speak> The beach is nice today! </speak>"},{"type":"Audio","source":"soundbank://soundlibrary/nature/amzn_sfx_ocean_wave_1x_01"}]}]}}
